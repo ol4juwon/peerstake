@@ -35,10 +35,12 @@ const Signup = () =>   {
             },
         data : data   
         }
+        try{
         console.log("config",config);
-        const response  = await axios(config).then(res => res.data).catch(err => {console.log({error:err})
-        return err});
-    
+        const response  = await axios(config).then(res => res.data).catch(function (error) {
+            // console.log(error);
+          });
+          console.log("response",response,response.error);
         if(response.user){
             alert("User registered successfully");
             window.location.href = '/login';
@@ -47,6 +49,10 @@ const Signup = () =>   {
         if(response.message){
             alert("User registration failed. \n Reason:"+response.message);
         }
+        }catch(error){  
+            console.log(error);
+          }
+        
 
     }
     return(
