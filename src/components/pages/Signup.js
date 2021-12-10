@@ -7,6 +7,7 @@ const Test =require( "../images/_1930224111808.png");
 
 const BASEURL = process.env.REACT_APP_BASEURL
 const Signup = () =>   {
+    const date = new Date();
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -35,7 +36,7 @@ const Signup = () =>   {
         data : data   
         }
         console.log("config",config);
-        const response  = await axios(config).then(res => res.data).catch(err => {console.log(err)
+        const response  = await axios(config).then(res => res.data).catch(err => {console.log({error:err})
         return err});
     
         if(response.user){
@@ -78,15 +79,15 @@ const Signup = () =>   {
                 <label htmlFor="Address">Address:</label><br/>
                 <input type="text" value={address} required onChange={(e) => {setAddress(e.target.value)}} id="address" name="address" placeholder="Your Address"/>
             </div> */}
-            <div className="radios">
+            {/* <div className="radios">
                 <label htmlFor="gender">Gender:</label><br/>
                Male: <input type="radio" className="gender" text="Male" value="Male" required onChange={(e) => setGender(e.target.value)}  name="Gender"/>{"\t"}Female: <input type="radio" className="gender" value={"Female"} required onChange={(e) => setGender(e.target.value)}  name="Gender"/><br/>
 
-            </div>
+            </div> */}
             
             <div className="inputs">
                 <label htmlFor="dob">Date of Birth</label><br/>
-                <input type="date"  value={dob}  required onChange={(e) => {setDob(e.target.value)}} id="dob" name="dob"/>
+                <input type="date"  value={dob} min={moment(date).subtract(18,'y')} required onChange={(e) => {setDob(e.target.value)}} id="dob" name="dob"/>
             </div>
             <div className="inputs">
                 <label htmlFor="username">Username</label><br/>
