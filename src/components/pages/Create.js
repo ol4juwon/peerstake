@@ -22,11 +22,11 @@ const Create = () => {
         {localStorage.getItem("user") ?"" : <Redirect to="/login"/>}
             
       <ul className="menu">
-        <li><a className="menuItem" href="welcome.html">Home</a></li>
-        <li><a className="menuItem" href="user.html">Profile</a></li>
-        <li><a className="menuItem" href="create.html">Stake</a></li>
-        <li><a className="menuItem" href="fund_wallet.html">Wallet</a></li>
-        <li><a className="menuItem" href="email_login.html">Sign Out</a></li>
+        <li><NavLink className="menuItem" to="welcome.html">Home</NavLink> </li>
+        <li><NavLink className="menuItem" to="user.html">Profile</NavLink> </li>
+        <li><NavLink className="menuItem" to="create.html">Stake</NavLink> </li>
+        <li><NavLink className="menuItem" to="fund_wallet.html">Wallet</NavLink> </li>
+        <li><NavLink className="menuItem" to="email_login.html">Sign Out</NavLink> </li>
       </ul>
       <img src={Hamburger} className="hamburger" alt=""/>
 
@@ -36,12 +36,12 @@ const Create = () => {
                 <img src={Icon} alt=""/>
             </div>
             <div  className="nav">
-                <a href="welcome.html" id="size">
+                <NavLink to="welcome.html" id="size">
                     <img src={PeerIcon} alt=""/>
 
-                </a>
+                </NavLink> 
 
-                 <a href="#"> <img src={Icon} alt=""/> </a>
+                 <NavLink to="#"> <img src={Icon} alt=""/> </NavLink> 
             </div>
            
         </div>
@@ -62,10 +62,10 @@ const Create = () => {
           <div className="content">
       <form >
         <div className="add_user">
-          <a href="">
+          <NavLink to="">
             <img src="/images/Group 110.png" alt=""/>
             <p>Add User</p>
-          </a>
+          </NavLink> 
         </div>
         <div className="inputs">
           <label htmlFor="amount">I want to stake</label>
@@ -89,9 +89,9 @@ const Create = () => {
         </div>
         
             
-            <a href="stakes.html" type="submit" className="submit" value="Share">
+            <NavLink to="stakes.html" type="submit" className="submit" value="Share">
               Share
-            </a>
+            </NavLink> 
         
         
       </form>
@@ -101,15 +101,15 @@ const Create = () => {
       <p>Stake with</p>
     </div> --> */}
     <div className="fund">
-        <a className="wallet" onClick="turn_on(successful_popup)">
+        <NavLink className="wallet" onClick="turn_on(successful_popup)">
             <p>Stake</p>
-        </a>
-        {/* <!-- <a className="card-transaction" href="#">
+        </NavLink> 
+        {/* <!-- <NavLink className="card-transaction" to="#">
             <p>Card</p>
-        </a>
-        <a className="bitcoin-transaction" href="#">
+        </NavLink> 
+        <NavLink className="bitcoin-transaction" to="#">
             <p>Bitcoin</p>
-        </a> --> */}
+        </NavLink> --> */}
     </div>
 
     <footer>
@@ -119,15 +119,15 @@ const Create = () => {
         
 
         <div className="links">
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Customer Support</a>
+            <NavLink to="#">About Us</NavLink> 
+            <NavLink to="#">Contact Us</NavLink> 
+            <NavLink to="#">Customer Support</NavLink> 
 
         </div>
 
         <div className="linkss">
-            <a href="#">Jobs</a>
-            <a href="#">Legal</a>
+            <NavLink to="#">Jobs</NavLink> 
+            <NavLink to="#">Legal</NavLink> 
         </div>
     </footer>
 
@@ -139,7 +139,7 @@ const Create = () => {
         <h3>Congratulations!</h3>
         <p>Your stake was created successfully</p>
         <img className="success_img" src="./images/Tick success.png" alt=""/>
-        <div onclick="window.location.href='./stakes.html'"> Continue </div>
+        <div onclick="window.location.to='./stakes.html'"> Continue </div>
       </div>
   </div>
 
@@ -149,7 +149,7 @@ const Create = () => {
         <h3>Sorry!</h3>
         <p>Stake could not be created due to insufficient funds</p>
         <img className="failed_img" src="/images/icons8-cancel.svg" alt=""/>
-        <div onclick="window.location.href='./fund_wallet.html'"> Deposit </div>
+        <div onclick="window.location.to='./fund_wallet.html'"> Deposit </div>
       </div>
   </div>
 
