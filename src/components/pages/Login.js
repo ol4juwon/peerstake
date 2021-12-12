@@ -173,7 +173,7 @@ form h2{
     color: #fff;
     font-weight: 400;
     font-size: 15px;
-    min-height: 50px;
+    min-height: 35px;
     border: none;
     border-radius: 5px;
     margin-bottom: 3%;
@@ -218,12 +218,12 @@ form h2{
     }
 
     .inputs input{
-        height: 40px;
+        height: 16px;
     }
 
     .submit{
         font-size: 14px;
-        min-height: 45px;
+        min-height: 35px;
         margin-bottom: 3%;
     }
 }
