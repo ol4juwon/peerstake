@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom"
-import axios from "axios";
+
 
 import styled from "styled-components"
+const _axios  = require("axios");
+const axios = _axios.create();
 
 const BASEURL = process.env.REACT_APP_BASEURL
 const Login = () => {
@@ -17,24 +19,48 @@ const Login = () => {
 
     const verifyUser = async (payload) => {
         console.log("Before login ===>> ", payload.email)
-        const data = JSON.stringify(payload);
+        const data = payload;
         const config = {
             method: "POST",
             url: `${BASEURL}/auth/login`,
             headers: {
                 'Content-Type': 'application/json'
             },
-            data: data
+            data: payload
         }
-        const Verified = await axios(config).then(res => { return res; }).catch(err => err )
-        if (Verified.data.user.token) {
-            localStorage.setItem("token", Verified.data.user.token);
-            localStorage.setItem("user", JSON.stringify(Verified.data.user));
+        const response  = await axios.post(`${BASEURL}/auth/login`,
+        data,
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+        .then(res =>  res.data)
+        .catch(err =>{
+            if(err.response){
+                console.log("Error:", err.response)
+                return err.response
+            }else if(err.request){
+                console.log("Error:", err.request)
+                return err.request
+            }else{
+                console.log("Error:", err.message)
+                return err.message
+            }
+        });
+         console.log("After login ===>> ",response)
+         if( response.data?.statusCode >= 400){
+            const error = response.data.description || response.data.message;
+            alert("\n Login failed. \n Reason: "+error);
+            return;
+        }
+        if (response.user.token) {
+            localStorage.setItem("token", response.user.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
             window.location.href = "/welcome"
-        }else{
-            alert("Problem signing you in")
         }
-
+        
         // console.log("verf", Verified.data.user)
     }
     return (

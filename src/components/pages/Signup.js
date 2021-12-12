@@ -21,31 +21,54 @@ const Signup = () =>   {
         e.preventDefault();
         console.log("dob",dob)
         const DOB = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
-        register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password, confirm_password: password, email, username,gender});
+        register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password:password, confirm_password: password, email, username,gender});
     }
 
     const register = async (payload) =>{
         console.log(payload,BASEURL);
         const data = JSON.stringify(payload);
-        const config = {
-            method: "POST",
-        url: `${BASEURL}/auth/register`,
-        headers: { 
+        // const config = {
+        //     method: "POST",
+        // url: `${BASEURL}/auth/register`,
+        // headers: { 
+        //         'Content-Type': 'application/json'
+        //     },
+        // data : data   
+        // }
+        // console.log("config",config);
+        console.log("localhodt", BASEURL);
+        const response  = await axios.post(`${BASEURL}/auth/register`,
+        data,
+        {
+            headers: {
                 'Content-Type': 'application/json'
-            },
-        data : data   
+            }
         }
-        console.log("config",config);
-        const response  = await axios(config).then(res => res.data).catch(err => {console.log({error:err})
-        return err});
+        )
+        .then(res => res.data)
+        .catch(err => {
+            if(err.response){
+                console.log("Error:", err.response)
+                return err.response
+            }else if(err.request){
+                console.log("Error:", err.request)
+                return err.request
+            }else{
+                console.log("Error:", err.message)
+                return err.message
+            }
+        });
     
         if(response.user){
             alert("User registered successfully");
             window.location.href = '/login';
         }
-        console.log({response});
-        if(response.message){
-            alert("User registration failed. \n Reason:"+response.message);
+        console.log(response);
+        const datum =response;
+        console.log(datum);
+        if(datum.status === "failed" || datum.data.statusCode >= 400){
+            const error = datum.data.description || datum.data.message;
+            alert("\n User registration failed. \n Reason: "+error);
         }
 
     }
