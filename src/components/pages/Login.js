@@ -161,7 +161,7 @@ form h2{
 
 .inputs input{
     width: 100%;
-    height: 50px;
+    height: 15px;
     border: 1px solid #e6e6e6;
     background-color: white;
     border-radius: 5px;
