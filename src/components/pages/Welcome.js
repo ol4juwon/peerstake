@@ -29,13 +29,13 @@ const menuIcon = document.querySelector(".menuIcon");
         menu.classList.remove("showMenu");
         menu.style.top = "-100px";
     
-        closeIcon.style.display = "none";
-        menuIcon.style.display = "block";
+        // closeIcon.style.display = "none";
+        // menuIcon.style.display = "block";
     } else {
         menu.classList.add("showMenu");
         menu.style.top = "0";
-        closeIcon.style.display = "block";
-        menuIcon.style.display = "none";
+        // closeIcon.style.display = "block";
+        // menuIcon.style.display = "none";
     
     }
     }
@@ -81,9 +81,9 @@ function(menuItem) {
                 <h2> 
                     <span className="space">
                         <span className="cent">$</span> 
-                        <span>3,200</span>
+                        <span>{user?.wallet?.balance}</span>
                     </span>
-                    <span className="cent">.59</span> 
+                    <span className="cent"></span> 
                 </h2>
                 <h3>WALLET BALANCE</h3>
                 <div>

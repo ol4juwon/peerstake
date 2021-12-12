@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink, Redirect } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
@@ -17,31 +18,38 @@ const Create = () => {
         function turn_off(popup) {
             popup.style.display = "none";
         }
+
+        const [user,setUser] = useState('')
+  const [userName,setUserName] = useState('')
+  useEffect(()=>{
+    const newUser = localStorage.getItem('user')
+  
+    const k = JSON.parse(newUser)
+    setUser(k)
+  },[])
     return (
         <Create.Wrapper>
         {localStorage.getItem("user") ?"" : <Redirect to="/login"/>}
-            
-      <ul className="menu">
-        <li><NavLink className="menuItem" to="welcome.html">Home</NavLink> </li>
-        <li><NavLink className="menuItem" to="user.html">Profile</NavLink> </li>
-        <li><NavLink className="menuItem" to="create.html">Stake</NavLink> </li>
-        <li><NavLink className="menuItem" to="fund_wallet.html">Wallet</NavLink> </li>
-        <li><NavLink className="menuItem" to="email_login.html">Sign Out</NavLink> </li>
+        <ul className="menu">
+        <li><NavLink className="menuItem" to="/welcome">Home</NavLink> </li>
+        <li><NavLink className="menuItem" to="/user">Profile</NavLink> </li>
+        <li><NavLink className="menuItem" to="/create">Stake</NavLink> </li>
+        <li><NavLink className="menuItem" to="/fund">Wallet</NavLink> </li>
+        <li><NavLink className="menuItem" to="/email">Sign Out</NavLink> </li>
       </ul>
       <img src={Hamburger} className="hamburger" alt=""/>
-
-    <div className="hero__sec">
-        <div>
-            <div className="icon">
+      <div className="hero__sec"> 
+         <div> 
+             <div className="icon">
                 <img src={Icon} alt=""/>
             </div>
             <div  className="nav">
-                <NavLink to="welcome.html" id="size">
+                <NavLink to="/" id="size">
                     <img src={PeerIcon} alt=""/>
 
                 </NavLink> 
 
-                 <NavLink to="#"> <img src={Icon} alt=""/> </NavLink> 
+                 <NavLink to="/"> <img src={Icon} alt=""/> </NavLink> 
             </div>
            
         </div>
@@ -49,20 +57,18 @@ const Create = () => {
           <h2> 
             <span className="space">
                 <span className="cent">$</span> 
-                <span>3,200</span>
+                <span>{user.wallet?.balance}</span>
             </span>
-            <span className="cent">.59</span> 
+            <span className="cent"></span> 
         </h2>
             <h3>WALLET BALANCE</h3>
             <img src={Wallet} alt=""/>
         </div>
-
-        
-    </div>
-          <div className="content">
+        </div>
+        <div className="content">
       <form >
         <div className="add_user">
-          <NavLink to="">
+          <NavLink to="/">
             <img src="/images/Group 110.png" alt=""/>
             <p>Add User</p>
           </NavLink> 
@@ -89,72 +95,13 @@ const Create = () => {
         </div>
         
             
-            <NavLink to="stakes.html" type="submit" className="submit" value="Share">
+            <NavLink to="/stakes" type="submit" className="submit">
               Share
             </NavLink> 
         
         
       </form>
     </div>
-
-    {/* <!-- <div className="st_wt">
-      <p>Stake with</p>
-    </div> --> */}
-    <div className="fund">
-        <NavLink className="wallet" onClick="turn_on(successful_popup)">
-            <p>Stake</p>
-        </NavLink> 
-        {/* <!-- <NavLink className="card-transaction" to="#">
-            <p>Card</p>
-        </NavLink> 
-        <NavLink className="bitcoin-transaction" to="#">
-            <p>Bitcoin</p>
-        </NavLink> --> */}
-    </div>
-
-    <footer>
-        <div className="logo">
-            <img src="./assets/peer stake logo 1 1.png" alt=""/>
-        </div>
-        
-
-        <div className="links">
-            <NavLink to="#">About Us</NavLink> 
-            <NavLink to="#">Contact Us</NavLink> 
-            <NavLink to="#">Customer Support</NavLink> 
-
-        </div>
-
-        <div className="linkss">
-            <NavLink to="#">Jobs</NavLink> 
-            <NavLink to="#">Legal</NavLink> 
-        </div>
-    </footer>
-
-    {/* <!-- popups section --> */}
-
-    <div className="cover success" onclick="turn_off(successful_popup);">
-      <div className="card">
-        <img className="close" src="./images/Vector 3.png" alt="close" onclick="turn_off(successful_popup);"/>
-        <h3>Congratulations!</h3>
-        <p>Your stake was created successfully</p>
-        <img className="success_img" src="./images/Tick success.png" alt=""/>
-        <div onclick="window.location.to='./stakes.html'"> Continue </div>
-      </div>
-  </div>
-
-  <div className="cover failed" onclick="turn_off(failed_popup);">
-      <div className="card">
-        <img className="close" src="/images/Vector 3.png" alt="" onclick="turn_off(failed_popup);"/>
-        <h3>Sorry!</h3>
-        <p>Stake could not be created due to insufficient funds</p>
-        <img className="failed_img" src="/images/icons8-cancel.svg" alt=""/>
-        <div onclick="window.location.to='./fund_wallet.html'"> Deposit </div>
-      </div>
-  </div>
-
-    {/* <!-- popups section ends --> */}
-
     <script src="./javascript/hamburger.js"></script>
 
         </Create.Wrapper>
