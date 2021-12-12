@@ -2,14 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 const User = () => {
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/';
+    }
     return (
         <User.Wrapper>
                 <ul className="menu">
-        <li><NavLink className="menuItem" to="welcome.html">Home</NavLink></li>
-        <li><NavLink className="menuItem" to="user.html">Profile</NavLink></li>
-        <li><NavLink className="menuItem" to="create.html">Stake</NavLink></li>
-        <li><NavLink className="menuItem" to="fund_wallet.html">Wallet</NavLink></li>
-        <li><NavLink className="menuItem" to="email_login.html">Sign out</NavLink></li>
+        <li><NavLink className="menuItem" to="/welcome">Home</NavLink></li>
+        <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
+        <li><NavLink className="menuItem" to="/Create">Stake</NavLink></li>
+        <li><NavLink className="menuItem" to="/Fundwallet">Wallet</NavLink></li>
+        <li><i className="menuItem" onClick={logout()}> Sign out</i></li>
 
       </ul>
       <img src= "./assets/menu_black_24dp 1.png" className="hamburger" alt=""/>

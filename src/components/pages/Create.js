@@ -91,7 +91,7 @@ const Create = () => {
         </div>
         <div className="inputs">
           <label htmlFor="Decider">Decider for dispute resolution</label><br/>
-          <input type="" name="Decider" id="Decider" placeholder="picture of the score board"/>
+          <input type="" name="Decider" id="Decider" placeholder="picture of the score boardl"/>
         </div>
         
             
@@ -395,7 +395,7 @@ Create.Wrapper = styled.div`
   
   .inputs input{
     width: 100%;
-    height: 50px;
+    height: 15px;
     border: 1px solid #e6e6e6;
     background-color: white;
     border-radius: 5px;
@@ -407,7 +407,7 @@ Create.Wrapper = styled.div`
     color: #fff;
     font-weight: 400;
     font-size: 15px;
-    min-height: 50px;
+    min-height: 35px;
     border: none;
     border-radius: 5px;
     margin-bottom: 3%;
