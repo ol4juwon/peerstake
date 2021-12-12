@@ -102,6 +102,24 @@ const Create = () => {
         
       </form>
     </div>
+    <footer>
+        <div className="logo">
+            <img src="./assets/peer stake logo 1 1.png" alt=""/>
+        </div>
+         
+
+         <div className="links">
+            <NavLink to="/">About Us</NavLink> 
+            <NavLink to="/">Contact Us</NavLink> 
+            <NavLink to="/">Customer Support</NavLink> 
+
+        </div>
+
+        <div className="linkss">
+            <NavLink to="/">Jobs</NavLink> 
+            <NavLink to="/">Legal</NavLink> 
+        </div>
+    </footer>
     <script src="./javascript/hamburger.js"></script>
 
         </Create.Wrapper>

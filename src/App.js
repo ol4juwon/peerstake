@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import Create from './components/pages/Create';
 import Forgot from './components/pages/Forgot';
 import ResetPassword from './components/pages/ResetPassword';
+import Stakes from './components/pages/Stakes';
 dotenv.config();
 console.log(process.env.REACT_APP_BASEURL);
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/Login" exact component={Login} />
         <Route path="/Welcome" exact={false} component={Welcome} />
         <Route path="/Create"  component={Create} />
+        <Route path="/stakes"  component={Stakes} />
         <Route path="/Forgot" exact component={Forgot} />
         <Route path="/ResetPassword" exact component={ResetPassword}/>
       </Switch>
