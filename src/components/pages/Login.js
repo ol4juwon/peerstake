@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom"
-
+import axios from "axios";
 
 import styled from "styled-components"
 const _axios  = require("axios");
-const axios = _axios.create();
+// const axios = _axios.create();
 
 const BASEURL = process.env.REACT_APP_BASEURL
 const Login = () => {
@@ -20,19 +20,30 @@ const Login = () => {
     const verifyUser = async (payload) => {
         console.log("Before login ===>> ", payload.email)
         const data = payload;
-        const config = {
-            method: "POST",
-            url: `${BASEURL}/auth/login`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: payload
-        }
+        // const config = {
+        //     method: "POST",
+        //     url: `${BASEURL}/auth/login`,
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     data: payload
+        // }
+
+// const axiosInstanvce = axios.create({BASEURL, 
+//     headers: {
+//         "Accept": "application/json, text/plain, */*",
+//     "Content-Type": "application/json ",
+//     "Allow-Control-Allow-Origin": "*"
+//     }
+// })
+// const req = axiosInstanvce.post(`${BASEURL}/auth/login`, data)
+// console.log("req:", req)
         const response  = await axios.post(`${BASEURL}/auth/login`,
         data,
         {
             headers: {
-                'Content-Type': 'application/json'
+                Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/json ",
             }
         }
         )

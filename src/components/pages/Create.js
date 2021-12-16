@@ -1,26 +1,181 @@
 import styled from 'styled-components';
 import { NavLink, Redirect } from "react-router-dom";
 import { useState, useEffect } from 'react';
-
+import User from '../hooks/User';
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
+import swal from '@sweetalert/with-react';
 import PeerIcon from "../assets/peer stake logo 1 1.png"
 import UserIcon from "../assets/[Downloader 1.png";
 import Wallet from "../images/paid_black_24dp 1.png"
+import axios from 'axios';
+var FormData = require('form-data');
+const BASEURL = process.env.REACT_APP_BASEURL
 const Create = () => {
-    const successful_popup = document.querySelector('.success');
-        const failed_popup = document.querySelector('.failed');
+  const { getUserByUsername } = User();
+   const [parties, setParties] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [user,setUser] = useState('')
+  const [name, setName] = useState("")
+  const [currency,setCurrency] = useState("NGN")
+  const [amount, setAmount] = useState('');
+   const [creator, setCreator] = useState("");
+   const [supervisor, setSupervisor] = useState("");
+   const [decider, setDecider] = useState("");
+   const [formData, setFormData] = useState("")
+   const [description, setDescription] = useState("");
+   const setForms = (e) => {
+     e.preventDefault()
+     console.log("parties",parties);
+     console.log("date",date);
+     console.log("amount",amount);
+      console.log("name",name);
+     console.log("description",description);
+     const usse = localStorage.getItem("user");
+      const userSA = JSON.parse(usse);
+      console.log("userSA:", userSA._id)
+      setCreator(`${userSA._id}`);
+      setSupervisor(`${userSA._id}`);
+     console.log("creator",creator);
+     console.log("supervisor", supervisor);
+      console.log("decider",decider);
+    console.log("onsubmit",formData)
+    createStake({parties,name, date, amount,description,currency ,decider, supervisor, creator});
+}
+   
+  
+const findUser = (str) => {
+  var regexp = /(\s|^)\@\w\w+\b/gm
+ var result = str.match(regexp);
+  if (result) {
+      result = result.map(function(s){ return s.trim();});
+      console.log(result);
+      return result;
+  } else {
+      return false;
+  }
+}
+const getUserID = async (user) => {
+  // const size = user.length
+  var ids = []
+  for(var i in user){
+     const resp = await getUserByUsername(user[i])
+    //  const id = resp.data.id
+    ids.push(resp)
+    // console.log("resp",resp)
+  }
+  return ids;
 
-        function turn_on(popup) {
-            popup.style.display = "flex";
+}
+const checkUser = async (user) => {
+  const vb = (user == "not found")
+  return vb
+}
+const createStake = async(payload) => {
+    const { name, date, amount, creator, decider,supervisor, description,parties, currency, supervisors } = payload;
+    if(amount == null || amount == "" || amount <= 0){
+      swal(
+        {
+          title: "Required",
+          text: "Please enter an amount",
+          icon: "warning",
+          buttons: "ok",
         }
+      )
+      return;
+    }
+    console.log("payload",payload)
+    const ids = findUser(parties)
+const userIds = await getUserID(ids)
+console.log("userIds",userIds)
+if(!userIds.every(checkUser)){
+  alert("please enter valid parties")
+}
+// setCreator(localStorage.getItem("user").)
+    var data = new FormData();
+  setCreator(localStorage.getItem("user")._id);
+    data.append('creatorId', creator);
+    data.append('name',name);
+    data.append('description', description);
+    data.append('amount', amount);
+    data.append('currency', 'NAIRA');
+    data.append('dueDate', date);
+    data.append('supervisors', '61b7b93e6d540f43e42c5442');
+    userIds.map(id => {
+      data.append('parties', id);
+    })
+    
+    data.append('decider',decider);
 
-        function turn_off(popup) {
-            popup.style.display = "none";
+    
+    console.log("data",data.toString())
+    const axiosInstance =  await axios.post(
+        `${BASEURL}/stake/create`,
+        data,
+        {
+          headers:{
+           
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json ",
+          }
         }
+    ).then(res => {
+        console.log(res.data)
+        return res.data
+    }).catch(err =>{
+      if(err.response){
+          console.log("Error:", err.response)
+          return err.response
+      }else if(err.request){
+          console.log("Error:", err.request)
+          return err.request
+      }else{
+          console.log("Error:", err.message)
+          return err.message
+      }
+  });
+  if(axiosInstance.code == 200){
+    swal(
+        {      
+          title:"Congratulations",
+          text:"Your stake was created successfully!",
+          icon:"success",
+          button: "OK",       
+        }
+    ).then(value => {
+      swal({
+        title: "Do You want to create another Stake",
+        text: "",
+        icon: "warning",
+        buttons: ["Take Me Back", "Yes"]
 
-        const [user,setUser] = useState('')
-  const [userName,setUserName] = useState('')
+      }).then(value => {
+        console.log("value",value)
+        // return;
+        if(value === true){
+          window.location.reload()
+        }else{
+          window.location.replace("/welcome")
+        }
+      }    
+    
+    )
+  })
+}else{
+    
+    swal(
+{      
+        title:"Error",
+        text:`${axiosInstance.description}`,
+        icon:"error",
+        button: "OK",
+}
+    )
+  }
+console.log("axiosInstance",axiosInstance)
+ }
+   
+ 
   useEffect(()=>{
     const newUser = localStorage.getItem('user')
   
@@ -46,7 +201,7 @@ const Create = () => {
             <div  className="nav">
                 <NavLink to="/" id="size">
                     <img src={PeerIcon} alt=""/>
-
+<i className="fa fa-user-circle-o" aria-hidden="true"></i>
                 </NavLink> 
 
                  <NavLink to="/"> <img src={Icon} alt=""/> </NavLink> 
@@ -68,38 +223,42 @@ const Create = () => {
         <div className="content">
       <form >
         <div className="add_user">
-          <NavLink to="/">
+          {/* <NavLink to="/">
             <img src="/images/Group 110.png" alt=""/>
             <p>Add User</p>
-          </NavLink> 
+          </NavLink>  */}
+        </div>
+        <div className="inputs">
+          <label htmlFor="name">Stake Title</label>
+          <input type="text" name="name" required value={name} onChange={(e)=> {setName(e.target.value)}} id="amout" placeholder="Arsenal vs manutd match"/>
         </div>
         <div className="inputs">
           <label htmlFor="amount">I want to stake</label>
-          <input type="number" name="amount" id="amout" placeholder="$100"/>
+          <input type="number" name="amount" required value={amount} onChange={(e)=> {setAmount(e.target.value)}} id="amout" placeholder="$100"/>
         </div>
         <div className="inputs">
           <label htmlFor="against">With</label><br/>
-          <input type="text" name="against" id="against" placeholder="I @jide will win @username/email"/>
+          <input type="text" name="against" value={parties} required onChange={(e)=> {setParties(e.target.value)}} id="against" placeholder="I @jide will win @username/email"/>
         </div>
         <div className="inputs">
           <label htmlFor="bet">That</label><br/>
-          <input type="text" name="bet" id="bet" placeholder="A 3 set FIFA 22 game"/>
+          <input type="text" name="bet"  value={description} required onChange={(e)=>setDescription(e.target.value)} id="bet" placeholder="A 3 set FIFA 22 game"/>
         </div>
         <div className="inputs">
           <label htmlFor="when">On</label><br/>
-          <input type="datetime-local" name="when" id="when" placeholder="Date/Time"/>
+          <input type="datetime-local" name="when" id="when" value={date} required onChange={(e) => { setDate(e.target.value)}} placeholder="Date/Time"/>
         </div>
         <div className="inputs">
           <label htmlFor="Decider">Decider for dispute resolution</label><br/>
-          <input type="" name="Decider" id="Decider" placeholder="picture of the score boardl"/>
+          <input type="" name="Decider" id="Decider" value={decider} required onChange={(e)=>setDecider(e.target.value)} placeholder="picture of the score boardl"/>
         </div>
         
             
-            <NavLink to="/stakes" type="submit" className="submit">
+            {/* <NavLink to="/stakes" type="submit" className="submit">
               Share
-            </NavLink> 
+            </NavLink>  */}
         
-        
+        <button onClick={(e) => {setForms(e)}}> Create Stake</button> 
       </form>
     </div>
     <footer>

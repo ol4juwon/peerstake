@@ -230,7 +230,7 @@ Welcome.Wrapper = styled.div`
       align-items: center;
       padding: 0px 20px;
       position: relative;
-      padding-top: 5%;
+      padding-top: 5px;
   }
   
   .nav > img{
@@ -249,7 +249,7 @@ Welcome.Wrapper = styled.div`
   .hero__sec{
       background: linear-gradient(356.95deg, #4D2B90 2.36%, #7E57C2 83.13%);
       border-radius: 0px 0px 20px 20px;
-      /* height: 70vh; */
+     height: 400px; 
       background-repeat: no-repeat;
       
   }
@@ -263,14 +263,14 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
-      line-height: 16px;
+      line-height: 1px;
       
       letter-spacing: -0.02em;
       
       /* ffffff */
       
       color: #FFFFFF;
-      padding-bottom: 15px;
+      padding-bottom: 5px;
   }
   
   #name{
@@ -291,14 +291,14 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: bold;
       font-size: 48px;
-      line-height: 56px;
+      line-height: 5px;
     
       letter-spacing: 0.03em;
       
       /* ffffff */
       
       color: #FFFFFF;
-      /* padding-bottom: 5px; */
+    //    padding-bottom: 5px; 
   
   }
   
@@ -320,7 +320,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 12px;
-      line-height: 14px;
+      line-height: 1px;
       /* identical to box height */
       
       
@@ -351,7 +351,7 @@ Welcome.Wrapper = styled.div`
   
   .hero__content div{
       /* margin-bottom: 20px; */
-      padding-bottom: 15%;
+      padding-bottom: 10px;
   
   }
   
@@ -382,7 +382,7 @@ Welcome.Wrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px;
+      padding: 5px;
   }
   
   
@@ -399,7 +399,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 64px;
-      line-height: 75px;
+      line-height: 10px;
      
       text-align: center;
       letter-spacing: -0.02em;
@@ -422,7 +422,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 12px;
-      line-height: 14px;
+      line-height: 5px;
       display: flex;
       align-items: flex-end;
       text-align: center;
