@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom"
 import axios from "axios";
-
+import swal from "@sweetalert/with-react"
 import styled from "styled-components"
 const _axios  = require("axios");
 // const axios = _axios.create();
@@ -63,7 +63,12 @@ const Login = () => {
          console.log("After login ===>> ",response)
          if( response.data?.statusCode >= 400){
             const error = response.data.description || response.data.message;
-            alert("\n Login failed. \n Reason: "+error);
+            swal({
+
+                title: "Login Failed",
+                icon: "error",
+                text: `Reason:  ${error}`,
+            })
             return;
         }
         if (response.user.token) {
@@ -76,6 +81,9 @@ const Login = () => {
     }
     return (
         <Login.Wrapper>
+             {  
+            localStorage.removeItem('token')}
+        {localStorage.removeItem('user')}
             <div className="header">
                 <NavLink to="/"><img src="/images/_1930224111808.png" alt="" /></NavLink>
                 {/* <!-- <a href="#"><img src="/images/hamburger.png" alt=""></a> --> */}

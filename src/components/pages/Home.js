@@ -1,29 +1,35 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import User from '../hooks/User'
 
 const Home = () => {
+    const  {logout} = User()
+    
     return (
         <Home.Wrapper>
+            {  
+            localStorage.removeItem('token')}
+        {localStorage.removeItem('user')}
             
-            <div class="logo">
+            <div className="logo">
         {/* <!-- <img src="/images/peer stake logo 1 1.png" alt=""> --> */}
     </div>
     <div>
-        <NavLink class="button" to="#">
-            <img class="button_logo" alt="" src="/images/google.png"/>
-            <div class="button_text">Continue with Google</div>
+        <NavLink className="button" to="#">
+            <img className="button_logo" alt="" src="/images/google.png"/>
+            <div className="button_text">Continue with Google</div>
         </NavLink>
-        <NavLink class="button" to="#">
-            <img class="button_logo" alt="" src="/images/facebook.png" />
-            <div class="button_text">Continue with Facebook</div>
+        <NavLink className="button" to="#">
+            <img className="button_logo" alt="" src="/images/facebook.png" />
+            <div className="button_text">Continue with Facebook</div>
         </NavLink>
         <NavLink className="button" to="#">
             <img className="button_logo" alt="" src="/images/apple.png"/>
             <div className="button_text">Continue with Apple</div>
         </NavLink>
     </div>
-    <div class="login">
+    <div className="login">
         <NavLink className="button" to="/login">Login with email</NavLink>
         <NavLink to="/signup" id="link2" className="button">Sign up with email</NavLink>
     </div>        </Home.Wrapper>

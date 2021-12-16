@@ -7,6 +7,10 @@ const createStake = async (payload) => {
     
 }
 
+const getStake = async () => {
+   
+}
+
 }
 
 export default Stake;

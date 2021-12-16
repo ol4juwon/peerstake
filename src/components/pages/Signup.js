@@ -121,7 +121,7 @@ const Signup = () =>   {
                 <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value)}} id="password" name="password" placeholder="Password"/>
             </div>
             
-            {/* <!-- <div class="inputs"/>
+            {/* <!-- <div className="inputs"/>
                 <label for="gender">Gender <span>(optional)</span></label><br>
                 <select name="gender" id="gender" aria-placeholder="select a gender">
                     <option value="male">Male</option>

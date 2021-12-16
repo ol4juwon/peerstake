@@ -1,12 +1,17 @@
 import { NavLink, Redirect } from "react-router-dom";
+import User from "../hooks/User"
 import styled from "styled-components";
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
 import PeerIcon from "../assets/peer stake logo 1 1.png"
 import UserIcon from "../assets/[Downloader 1.png";
 import { useState,useEffect } from "react";
+import transactionIcon from "../assets/transaction.png"
+import AddIcon from "../assets/Group 54.png"
 // import NavBar from "../NavBar";
 const Welcome = () => {
+const {logout} = User();
+
   const [user,setUser] = useState('')
   const [userName,setUserName] = useState('')
   useEffect(()=>{
@@ -55,21 +60,25 @@ function(menuItem) {
                      <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
                     <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
                     <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
-                    <li><NavLink className="menuItem" to="/fund_wallet">Wallet</NavLink></li>
-                    <li><NavLink className="menuItem" to="/Signout">Sign out</NavLink></li>
+                    <li><NavLink className="menuItem" to="/fundwallet">Wallet</NavLink></li>
+                    <li><i className="menuItem" onClick={logout}> Sign out</i></li>
+
    
                     </ul> 
             <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
           <div className="hero__sec">
             <div>
                 <div className="icon">
+                    <NavLink to="/welcome">
                     <img src={Icon} alt=""/>
+                    </NavLink>
                 </div>
                 <div  className="nav">
-                    
+                    <NavLink to="/welcome"> 
                     <img src={PeerIcon} alt=""/>
-
-                   <NavLink to="/"> <img src={Icon} alt=""/> </NavLink>
+                     {/* <img src={Icon} alt=""/> */}
+                    </NavLink>
+                  
                 </div>
               
             </div>
@@ -80,7 +89,7 @@ function(menuItem) {
                 </NavLink>
                 <h2> 
                     <span className="space">
-                        <span className="cent">$</span> 
+                        <span className="cent">₦</span> 
                         <span>{user?.wallet?.balance}</span>
                     </span>
                     <span className="cent"></span> 
@@ -94,9 +103,9 @@ function(menuItem) {
           </div>
 
           <div className="stakes">
-        <p>Stakes</p>
+                <p>Stakes</p>
         <div className="stakes--card">
-            <NavLink to="run_stakes.html#running--stakes " >
+            <NavLink to="/stakes" >
                 <div className="card--1">
                     <p>5</p>
                     <h2>Running</h2>
@@ -118,15 +127,15 @@ function(menuItem) {
         </div>
     </div>
     <div className="fund">
-        <NavLink to="/fund_wallet">
+        <NavLink to="/fundwallet">
             <div className="fund--wallet">
-                {/* <img src="./assets/Group 54.png" alt=""/> */}
+                <img src={AddIcon} alt=""/>
                 <p>Fund Your Wallet</p>
             </div>
         </NavLink>
         <NavLink to="/transactions">
             <div className="transaction">
-                {/* <img src="./assets/transaction.png" alt=""/> */}
+                <img src={transactionIcon} alt=""/>
                 <p>View transactions</p>
             </div>
         </NavLink>
@@ -135,20 +144,20 @@ function(menuItem) {
 
     <footer>
         <div className="logo">
-            {/* <img src="./assets/peer stake logo 1 1.png" alt=""/> */}
+            <img src={PeerIcon} alt=""/>
         </div>
         
 
         <div className="links">
-            {/* <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Customer Support</a> */}
+            <NavLink to="#">About Us</NavLink>
+            <NavLink to="#">Contact Us</NavLink>
+            <NavLink to="#">Customer Support</NavLink>
 
         </div>
 
         <div className="linkss">
-            {/* <a href="#">Jobs</a>
-            <a href="#">Legal</a> */}
+            <NavLink to="#">Jobs</NavLink>
+            <NavLink to="#">Legal</NavLink>
         </div>
     </footer>
         </Welcome.Wrapper>
@@ -162,7 +171,7 @@ Welcome.Wrapper = styled.div`
     scroll-behavior: smooth;
     a{
       text-decoration: none;
-  }
+     }
   
     
     .menuItem {
@@ -192,7 +201,7 @@ Welcome.Wrapper = styled.div`
     }
     
   .hamburger:hover{
-      transform: rotate(720deg);
+      transform: rotate(920deg);
   }
   
     .closeIcon {
@@ -230,11 +239,11 @@ Welcome.Wrapper = styled.div`
       align-items: center;
       padding: 0px 20px;
       position: relative;
-      padding-top: 5px;
+      padding-top: 5%;
   }
   
-  .nav > img{
-      width: 25%;
+  .nav >a > img{
+      width: 100px;
   }
   
   .icon{
@@ -242,8 +251,6 @@ Welcome.Wrapper = styled.div`
       top: 0;
       left: 0;
   }
-  
-  
   
   
   .hero__sec{
@@ -355,89 +362,88 @@ Welcome.Wrapper = styled.div`
   
   }
   
-  .stakes{
-      margin-top: 20px;
-      background: rgb(196, 196, 196, 0.1);
-      /* opacity: 0.1; */
-      border-radius: 6px;
-      padding: 20px;
-      width: 95%;
-      margin-left: 2.5%;
-  }
-  
   .stakes p{
-      font-family: 'Roboto' ,sans-serif;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 15px;
-      line-height: 18px;
-      /* identical to box height */
-      
-      color: #7E57C2;
-      letter-spacing: -0.02em;
-  }
+    font-family: 'Roboto' ,sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 1px;
+    /* identical to box height */
+    
+    color: #7E57C2;
+    letter-spacing: -0.02em;
+}
+
+.stakes{
+    margin-top: 2px;
+    background: rgb(196, 196, 196, 0.1);
+    /* opacity: 0.1; */
+    border-radius: 6px;
+    padding: 10px;
+    width: 95%;
+    margin-left: 2.5%;
+}
   
+.stakes--card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
   
-  .stakes--card{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 5px;
-  }
-  
-  
-  .card--1{
-      background: #FFFFFF;
-      box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 6px;
-      padding: 20px 22px;
-  }
+
+.card--1{
+    background: #FFFFFF;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 1px 20px;
+}
   
   
   .card--1 p{
-      font-family: 'Roboto' ,sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 64px;
-      line-height: 10px;
-     
-      text-align: center;
-      letter-spacing: -0.02em;
-      
-      /* Green 1 */
-      
-      color: #219653;
-      
-  }
-  
-  .card--2{
-      background: #FFFFFF;
-      box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 6px;
-      padding: 20px 22px;
+    font-family: 'Roboto' ,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 64px;
+    line-height: 10px;
+   
+    text-align: center;
+    // letter-spacing: -0.02em;
+    
+    /* Green 1 */
+    
+    color: #219653;  
   }
   
   .card--1 h2{
-      font-family: 'Roboto', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 5px;
-      display: flex;
-      align-items: flex-end;
-      text-align: center;
-      text-transform: capitalize;
-      
-      /* Green 1 */
-      
-      color: #219653;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 10px;
+    display: flex;
+    align-items: flex-end;
+    text-align: center;
+    text-transform: capitalize;
+    
+    /* Green 1 */
+    
+    color: #219653;
   }
+  .card--2{
+    background: #FFFFFF;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 1px 20px;
+  }
+  
+  
   .card--2 p{
       font-family: 'Roboto' ,sans-serif;
       font-style: normal;
       font-weight: normal;
       font-size: 64px;
-      line-height: 75px;
+      line-height: 1px;
      
       text-align: center;
       letter-spacing: -0.02em;
@@ -453,7 +459,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 12px;
-      line-height: 14px;
+      line-height: 1px;
       display: flex;
       align-items: flex-end;
       text-align: center;
@@ -465,21 +471,21 @@ Welcome.Wrapper = styled.div`
   }
   
   .card--3{
-      background: #FFFFFF;
-      box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 6px;
-      padding: 20px 22px;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 1px 20px;
   }
   
   .card--3 p{
-      font-family: 'Roboto' ,sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 64px;
-      line-height: 75px;
-     
-      text-align: center;
-      letter-spacing: -0.02em;
+    font-family: 'Roboto' ,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 64px;
+    line-height: 10px;
+   
+    text-align: center;
+    letter-spacing: -0.02em;
       
       /* Green 1 */
       
@@ -492,7 +498,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 12px;
-      line-height: 14px;
+      line-height: 1px;
      
       text-align: center;
       text-transform: capitalize;

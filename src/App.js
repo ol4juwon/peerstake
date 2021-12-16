@@ -10,6 +10,9 @@ import Create from './components/pages/Create';
 import Forgot from './components/pages/Forgot';
 import ResetPassword from './components/pages/ResetPassword';
 import Stakes from './components/pages/Stakes';
+import Transactions from './components/pages/Transactions';
+import Fundwallet from './components/pages/FundWallet';
+import User from './components/pages/User';
 dotenv.config();
 console.log(process.env.REACT_APP_BASEURL);
 function App() {
@@ -24,6 +27,9 @@ function App() {
         <Route path="/Create"  component={Create} />
         <Route path="/stakes"  component={Stakes} />
         <Route path="/Forgot" exact component={Forgot} />
+        <Route path="/User" component={User } />
+        <Route path={"/Fundwallet"} component={Fundwallet } />
+        <Route path="/Transactions" exact component={Transactions} />
         <Route path="/ResetPassword" exact component={ResetPassword}/>
       </Switch>
     </Router>

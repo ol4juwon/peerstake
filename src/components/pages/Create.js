@@ -2,17 +2,36 @@ import styled from 'styled-components';
 import { NavLink, Redirect } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import User from '../hooks/User';
+
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
 import swal from '@sweetalert/with-react';
 import PeerIcon from "../assets/peer stake logo 1 1.png"
-import UserIcon from "../assets/[Downloader 1.png";
+// import UserIcon from "../assets/[Downloader 1.png";
 import Wallet from "../images/paid_black_24dp 1.png"
 import axios from 'axios';
 var FormData = require('form-data');
 const BASEURL = process.env.REACT_APP_BASEURL
 const Create = () => {
-  const { getUserByUsername } = User();
+
+  const menu = document.querySelector(".menu");
+  const menuItems = document.querySelectorAll(".menuItem");
+  function toggleMenu() {
+    if (menu.classList.contains("showMenu")) {
+        menu.classList.remove("showMenu");
+        menu.style.top = "-100px";
+    
+        // closeIcon.style.display = "none";
+        // menuIcon.style.display = "block";
+    } else {
+        menu.classList.add("showMenu");
+        menu.style.top = "0";
+        // closeIcon.style.display = "block";
+        // menuIcon.style.display = "none";
+    
+    }
+    }
+  const { getUserByUsername, logout } = User();
    const [parties, setParties] = useState("");
   const [date, setDate] = useState(new Date());
   const [user,setUser] = useState('')
@@ -185,21 +204,22 @@ console.log("axiosInstance",axiosInstance)
     return (
         <Create.Wrapper>
         {localStorage.getItem("user") ?"" : <Redirect to="/login"/>}
-        <ul className="menu">
-        <li><NavLink className="menuItem" to="/welcome">Home</NavLink> </li>
-        <li><NavLink className="menuItem" to="/user">Profile</NavLink> </li>
-        <li><NavLink className="menuItem" to="/create">Stake</NavLink> </li>
-        <li><NavLink className="menuItem" to="/fund">Wallet</NavLink> </li>
-        <li><NavLink className="menuItem" to="/email">Sign Out</NavLink> </li>
-      </ul>
-      <img src={Hamburger} className="hamburger" alt=""/>
+        <ul className="menu">       
+        <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
+        <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
+        <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
+        <li><NavLink className="menuItem" to="/fund_wallet">Wallet</NavLink></li>
+        <li><i className="menuItem" onClick={logout}> Sign out</i></li>
+        </ul> 
+      <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
+          
       <div className="hero__sec"> 
          <div> 
              <div className="icon">
                 <img src={Icon} alt=""/>
             </div>
             <div  className="nav">
-                <NavLink to="/" id="size">
+                <NavLink to="/Welcome" id="size">
                     <img src={PeerIcon} alt=""/>
 <i className="fa fa-user-circle-o" aria-hidden="true"></i>
                 </NavLink> 
@@ -211,7 +231,7 @@ console.log("axiosInstance",axiosInstance)
         <div className="hero__content">
           <h2> 
             <span className="space">
-                <span className="cent">$</span> 
+                <span className="cent">₦</span> 
                 <span>{user.wallet?.balance}</span>
             </span>
             <span className="cent"></span> 
