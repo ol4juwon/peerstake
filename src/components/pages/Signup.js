@@ -34,9 +34,19 @@ const Signup = () =>   {
     const onsubmit = (e) => {
         e.preventDefault();
         if(username.length <5){
-            swal(
-                "Username must be at least 5 characters long",
+            swal({
+                text:  "Username must be at least 5 characters long",
+                icon: "warning",
+            }
+              
             )
+            return;
+        }
+        if(password.length < 7){
+            swal({
+                text:"Password must be at least 8 characters long",
+                icon: "warning",
+             } )
             return;
         }
         console.log("dob",dob)
@@ -44,7 +54,7 @@ const Signup = () =>   {
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
-        const DOB =day + "/" + month + "/" + year ;
+        const DOB =month + "/" + day+ "/" + year ;
         console.log("DOB",DOB)
         // const  = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
         register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password:password, confirm_password: password, email, username});
@@ -94,7 +104,11 @@ const Signup = () =>   {
         console.log(datum);
         if(datum.status === "failed" || datum.data.statusCode >= 400){
             const error = datum.data.description || datum.data.message;
-            alert("\n User registration failed. \n Reason: "+error);
+            swal({
+                title: "User registration failed",
+                text: error,
+            })
+            return;
         }
 
     }
@@ -144,7 +158,7 @@ const Signup = () =>   {
             </div>
             <div className="inputs">
                 <label htmlFor="password">Password</label><br/>
-                <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value)}} id="password" name="password" placeholder="Password"/>
+                <input type="password"  value={password} onChange={(e) => { setPassword(e.target.value)}} id="password" name="password" placeholder="Password"/>
             </div>
             
             {/* <!-- <div className="inputs"/>
