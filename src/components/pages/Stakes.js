@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import User from "../hooks/User"
+import Stake from "../hooks/Stake"
 import PeerIcon from "../assets/Peer Stake Icon.png" 
 import PeerLogo from "../images/peer stake logo 1 1.png"
 import UnionIcon from "../assets/Union.png"
-import Group3 from "../assets/Group 3.png"
 const Stakes = () => {
     const {logout} = User();
-        
+    const {stake} = Stake();
+    const [stakeList, setStakeList] = useState([]);
+    useEffect(() => {
+            setStakeList(stake)
+
+    }, [])
     return (
         <Stakes.Wrapper>
             
@@ -70,13 +75,19 @@ const Stakes = () => {
                     <td id="td">Stake Decider</td>
             </th>
     
-           
-               <tr>
-                   <td>5</td>
-                   <td>$100</td>
-                   <td>29/11/21</td>
-                   <td>Bode</td>
-               </tr>
+           {
+               stakeList.map((stake, index) => {
+                     return (
+                      <tr>
+                            <td>{index+1}</td>
+                            <td>{stake.amount}</td>
+                            <td>{stake.due_date}</td>
+                            <td>{stake.stake_decider}</td>
+                      </tr>
+                     )
+                })
+           }
+               
         </table>
     
     </div>

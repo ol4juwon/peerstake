@@ -5,30 +5,39 @@ import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
 import PeerIcon from "../assets/peer stake logo 1 1.png"
 import userIcon from "../images/icons8-user-30.png"
-
+import Stakes from "../hooks/Stake"
 import { useState,useEffect } from "react";
 import transactionIcon from "../assets/transaction.png"
 import AddIcon from "../assets/Group 54.png"
 // import NavBar from "../NavBar";
 const Welcome = () => {
 const {logout} = User();
-
+const {stake} = Stakes();
   const [user,setUser] = useState('')
+  const [dueStakes,setDueStakes] = useState('')
   useEffect(()=>{
     const newUser = localStorage.getItem('user')
   
     const k = JSON.parse(newUser)
     setUser(k)
   },[])
-  // setUser(localStorage.getItem("user"))
-  // const k = JSON.parse(user)
+
+console.log("user stake:", stake)
   console.log("Storage user",user.token)
   const menu = document.querySelector(".menu");
 const menuItems = document.querySelectorAll(".menuItem");
-// const hamburger= document.querySelector(".hamburger");
-// const closeIcon= document.querySelector(".closeIcon");
-// const menuIcon = document.querySelector(".menuIcon");
-
+const checkForDueStakes =(stake) => {
+    let dueStakes = 0;
+stake.filter(stake => {
+    if(stake.dueDate < Date.now()){
+        dueStakes++;
+    }
+})
+return dueStakes;
+}
+useEffect(()=>{
+    setDueStakes(checkForDueStakes(stake))
+},[]);
   function toggleMenu() {
     if (menu.classList.contains("showMenu")) {
         menu.classList.remove("showMenu");
@@ -108,7 +117,7 @@ function(menuItem) {
         <div className="stakes--card">
             <NavLink to="/stakes" >
                 <div className="card--1">
-                    <p>5</p>
+                    <p>{stake.length}</p>
                     <h2>Running</h2>
                 </div>
             </NavLink>
@@ -120,7 +129,7 @@ function(menuItem) {
            </NavLink>
             <NavLink to="/Stake">
                 <div className="card--3">
-                    <p>1</p>
+                    <p>{dueStakes}</p>
                     <h2>Due</h2>
                 </div>
             </NavLink>
