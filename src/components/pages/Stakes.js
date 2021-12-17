@@ -5,6 +5,8 @@ import User from "../hooks/User"
 import Stake from "../hooks/Stake"
 import PeerIcon from "../assets/Peer Stake Icon.png" 
 import PeerLogo from "../images/peer stake logo 1 1.png"
+import claimIcon from "../assets/Group 75.png"
+import disputeIcon from "../assets/Group 82.png"
 import UnionIcon from "../assets/Union.png"
 const Stakes = () => {
     const {logout} = User();
@@ -54,7 +56,7 @@ const Stakes = () => {
                 <div className="stakes">
                     <div className="run--info">
                         <p>Running Stakes</p>
-                        <span>5</span>
+                        <span>{stake.length || 0 }</span>
                     </div>
                 </div>
             </div>
@@ -145,7 +147,7 @@ const Stakes = () => {
             <div id="due--stakes" className="due--stakes"></div>
             <div className="due" >
                 <p>Due Stakes</p>
-                <span>10</span>
+                <span>{dueStake.length || 0}</span>
             </div>
         </div>
     
@@ -155,32 +157,44 @@ const Stakes = () => {
         <table className="table">
 
            
-            <th className='bg'>
-                    <td id="td"> SN</td>
-                    <td id="td">Amount</td>
-                    <td id="td">Due Date</td>
-                    <td id="td">Stake Decider</td>
-                    <td id="td">Claim Stake</td>
-                    <td id="td">Dispute Stake</td>
-                    <td id="td">Status</td>
+            <tr className='bg'>
+                    <th id="td"> SN</th>
+                    <th id="td">Amount</th>
+                    <th id="td">Due Date</th>
+                    <th id="td">Stake Decider</th>
+                    <th id="td">Claim Stake</th>
+                    <th id="td">Dispute Stake</th>
+                    <th id="td">Status</th>
                     
-                </th>
+                </tr>
     
            <tbody id="invites--bg">
-               <tr>
-                   <td>1</td>
-                   <td>$100</td>
-                   <td>29/11/21</td>
-                   <td>Bode</td>
-                    <td>
-                        <NavLink  to="#"><img onclick="turn_on(claim_popup)" className="claim" src="./assets/Group 75.png" alt=""/></NavLink>
-                    </td>
-                    <td>
-                        <NavLink  to="#"><img onclick="turn_on(upload_popup)" src="./assets/Group 82.png" alt=""/></NavLink>
-
-                    </td>
-                    <td>Settled</td>
-               </tr>
+               {
+                   dueStake.map((dueStake, index) => {
+                       const date = new Date(dueStake.dueDate);
+                          const day = date.getDate();
+                            const month = date.getMonth() + 1;
+                            const year = date.getFullYear();
+                            const dueDate = `${day}/${month}/${year}`;
+                    return (
+                        <tr>
+                        <td>{index+1}</td>
+                        <td>{dueStake.amount}</td>
+                        <td>{dueDate} </td>
+                        <td>{dueDate.name}</td>
+                         <td>
+                             <NavLink  to="#"><img onclick="turn_on(claim_popup)" className="claim" src={claimIcon} alt=""/></NavLink>
+                         </td>
+                         <td>
+                             <NavLink  to="#"><img onclick="turn_on(upload_popup)" src={disputeIcon} alt=""/></NavLink>
+     
+                         </td>
+                         <td>{dueStake.claimed? "Settled":"Not settled"}</td>
+                    </tr>
+                        )
+                   })
+               }
+               
                
            </tbody>
         </table>
@@ -581,7 +595,7 @@ footer{
 
 .table td{
     text-align: center;
-    white-space: nowrap;
+    // white-space: nowrap;
 }
 
 
@@ -599,13 +613,13 @@ td{
     /* border: 1px solid #dddddd; */
     border-bottom: 1px solid  #E5E5E5;
     text-align: left;
-    padding: 15px;
+    padding:  15px;
     /* display: inline-flex; */
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 10px;
-    line-height: 12px;
+    // line-height: 12px;
     
     color: #828282;
 
@@ -619,7 +633,7 @@ td{
     /* background: #F9F9F9; */
     border-radius: 11px;
     // width: 95%;
-    margin: 0 auto;
+    // margin: 0 auto;
     height: 50vh;
 }
  
