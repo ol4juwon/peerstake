@@ -8,12 +8,8 @@ import PeerLogo from "../images/peer stake logo 1 1.png"
 import UnionIcon from "../assets/Union.png"
 const Stakes = () => {
     const {logout} = User();
-    const {stake} = Stake();
-    const [stakeList, setStakeList] = useState([]);
-    useEffect(() => {
-            setStakeList(stake)
-
-    }, [])
+    const {stake,dueStake} = Stake();
+  
     return (
         <Stakes.Wrapper>
             
@@ -54,34 +50,34 @@ const Stakes = () => {
     </div>
 
  
-    
-    <div className="running-stakes" >
-        <table className="table">
-            {/* <div id="running--stakes" name ="running--stakes"></div> */}
-
-
-            <tr id="running--stakes" name ="running--stakes">
+    <div id="running--stakes" name ="running--stakes">
                 <div className="stakes">
                     <div className="run--info">
                         <p>Running Stakes</p>
                         <span>5</span>
                     </div>
                 </div>
+            </div>
+    <div className="running-stakes" >
+        <table className="table">
+            {/* <div id="running--stakes" name ="running--stakes"></div> */}
+
+
+           
+            <tr className='bg'>
+                    <th id="td"> SN</th>
+                    <th id="td">Amount</th>
+                    <th id="td">Due Date</th>
+                    <th id="td">Stake Decider</th>
             </tr>
-            <th className='bg'>
-                    <td id="td"> SN</td>
-                    <td id="td">Amount</td>
-                    <td id="td">Due Date</td>
-                    <td id="td">Stake Decider</td>
-            </th>
     
            {
-               stakeList.map((stake, index) => {
+               stake.map((stake, index) => {
                      return (
                       <tr>
                             <td>{index+1}</td>
                             <td>{stake.amount}</td>
-                            <td>{stake.due_date}</td>
+                            <td>{stake.dueDate}</td>
                             <td>{stake.stake_decider}</td>
                       </tr>
                      )
@@ -92,7 +88,7 @@ const Stakes = () => {
     
     </div>
  
-    <tr>
+    
         <div className="stakes">
             <div id="stake--invite" name ="stake--invite"></div>
             <div className="invites" >
@@ -100,7 +96,7 @@ const Stakes = () => {
                 <span>10</span>
             </div>
         </div>
-    </tr>
+    
     <div className="stakes-invite">
       
         <table className="table">
@@ -144,7 +140,7 @@ const Stakes = () => {
    
 
 
-    <tr>
+    
         <div className="stakes">
             <div id="due--stakes" className="due--stakes"></div>
             <div className="due" >
@@ -152,7 +148,7 @@ const Stakes = () => {
                 <span>10</span>
             </div>
         </div>
-    </tr>
+    
 
     <div className="stakes-invite pad" >
       
@@ -579,7 +575,7 @@ footer{
 
 
 .table{
-    width: 100vw;
+    // width: 100vw;
     border-collapse: collapse;
 }
 
