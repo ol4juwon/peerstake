@@ -12,32 +12,23 @@ import AddIcon from "../assets/Group 54.png"
 // import NavBar from "../NavBar";
 const Welcome = () => {
 const {logout} = User();
-const {stake} = Stakes();
+const {stake,dueStake} = Stakes();
   const [user,setUser] = useState('')
-  const [dueStakes,setDueStakes] = useState('')
-  useEffect(()=>{
+
+console.log("user stake:", stake)
+console.log("user dueStake:", dueStake)
+  console.log("Storage user",user.token)
+  const menu = document.querySelector(".menu");
+const menuItems = document.querySelectorAll(".menuItem");
+
+ useEffect(()=>{
     const newUser = localStorage.getItem('user')
   
     const k = JSON.parse(newUser)
     setUser(k)
+    
   },[])
 
-console.log("user stake:", stake)
-  console.log("Storage user",user.token)
-  const menu = document.querySelector(".menu");
-const menuItems = document.querySelectorAll(".menuItem");
-const checkForDueStakes =(stake) => {
-    let dueStakes = 0;
-stake.filter(stake => {
-    if(stake.dueDate < Date.now()){
-        dueStakes++;
-    }
-})
-return dueStakes;
-}
-useEffect(()=>{
-    setDueStakes(checkForDueStakes(stake))
-},[]);
   function toggleMenu() {
     if (menu.classList.contains("showMenu")) {
         menu.classList.remove("showMenu");
@@ -117,7 +108,7 @@ function(menuItem) {
         <div className="stakes--card">
             <NavLink to="/stakes" >
                 <div className="card--1">
-                    <p>{stake.length}</p>
+                    <p>{stake.length || 0}</p>
                     <h2>Running</h2>
                 </div>
             </NavLink>
@@ -129,7 +120,7 @@ function(menuItem) {
            </NavLink>
             <NavLink to="/Stake">
                 <div className="card--3">
-                    <p>{dueStakes}</p>
+                    <p>{dueStake.length}</p>
                     <h2>Due</h2>
                 </div>
             </NavLink>

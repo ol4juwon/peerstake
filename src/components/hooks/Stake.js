@@ -5,22 +5,22 @@ const BASEURL = process.env.REACT_APP_BASEURL
 
 const Stake = () => {
    const [stake, setStake] = useState([]);
+   const [dueStake, setDueStake] = useState([]);
 const createStake = async (payload) => {
     
 }
 
-const getStake = async () => {
 
-}
+
 const getStakeByUser = async (id) => {
-   const data = JSON.stringify({id});
-   const response = await axios.post(`${BASEURL}/stake/get?creator_id=${id}&stake_id=61bb203fdbcbf30022ff5e34&all=true`,
+   // const data = JSON.stringify({id});
+   const response = await axios.get(`${BASEURL}/stake/get?creator_id=${id}&stake_id=61bb203fdbcbf30022ff5e34&all=true`,
    {
          headers: {
                Accept: "application/json, text/plain, */*",
          }
    }
-   ).then(res => res.stakes)
+   ).then(res => res)
    .catch(err =>{
       if(err.response){
           console.log("Error:", err.response)
@@ -34,16 +34,24 @@ const getStakeByUser = async (id) => {
       }
   })
 
-  setStake(response)
+  setStake(response.data.stakes)
+  const res = response.data.stakes;
+  const newarr = res.filter(stake => {
+   const date = new Date(stake.dueDate)
+   return date < Date.now()})
+   setDueStake(newarr)
+//   console.log(stake)
 }
-const searchStake = async () =>{
+useEffect(() => {
+   const ids = JSON.parse(localStorage.getItem("user"));
+   const id = ids._id
+      getStakeByUser(id)   
+   console.log("stake fror gere is ", stake)
+    
+}, [])
+console.log("stake fror gere is3 ", stake)
 
-}
-const dueStakes = async () => {
-   
-}
-
-return {searchStake,getStake, stake,createStake}
+return {stake,dueStake,createStake}
 
 }
 
