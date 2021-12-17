@@ -15,13 +15,13 @@ const Signup = () =>   {
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     // const [address, setAddress] = useState('');
-    const [gender,setGender ] = useState('');
+    // const [gender,setGender ] = useState('');
     const [dob,setDob] =useState('');
     const onsubmit = (e) => {
         e.preventDefault();
         console.log("dob",dob)
         const DOB = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
-        register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password:password, confirm_password: password, email, username,gender});
+        register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password:password, confirm_password: password, email, username});
     }
 
     const register = async (payload) =>{
@@ -130,7 +130,7 @@ const Signup = () =>   {
             </div> --> */}
             <div className="terms_conditions">
                 <input type="checkbox" id="terms" required name="terms" value="terms" />
-                <label htmlFor="terms" className="terms">I accept the terms and condition of Peer Stake</label>
+                <label htmlFor="terms" className="terms">I accept the terms and condition of PeerStake</label>
             </div>
             <input className="submit" type="submit" value="Sign Up"/><br/>
     

@@ -8,8 +8,17 @@ const createStake = async (payload) => {
 }
 
 const getStake = async () => {
+
+}
+
+const searchStake = async () =>{
+
+}
+const dueStakes = async () => {
    
 }
+
+return {searchStake,getStake, createStake}
 
 }
 

@@ -13,9 +13,9 @@ import axios from 'axios';
 var FormData = require('form-data');
 const BASEURL = process.env.REACT_APP_BASEURL
 const Create = () => {
-
+const {findUser, getUserID} = User();
   const menu = document.querySelector(".menu");
-  const menuItems = document.querySelectorAll(".menuItem");
+  // const menuItems = document.querySelectorAll(".menuItem");
   function toggleMenu() {
     if (menu.classList.contains("showMenu")) {
         menu.classList.remove("showMenu");
@@ -41,7 +41,7 @@ const Create = () => {
    const [creator, setCreator] = useState("");
    const [supervisor, setSupervisor] = useState("");
    const [decider, setDecider] = useState("");
-   const [formData, setFormData] = useState("")
+  //  const [formData, setFormData] = useState("")
    const [description, setDescription] = useState("");
    const setForms = (e) => {
      e.preventDefault()
@@ -58,41 +58,20 @@ const Create = () => {
      console.log("creator",creator);
      console.log("supervisor", supervisor);
       console.log("decider",decider);
-    console.log("onsubmit",formData)
+    // console.log("onsubmit",formData)
     createStake({parties,name, date, amount,description,currency ,decider, supervisor, creator});
 }
    
   
-const findUser = (str) => {
-  var regexp = /(\s|^)\@\w\w+\b/gm
- var result = str.match(regexp);
-  if (result) {
-      result = result.map(function(s){ return s.trim();});
-      console.log(result);
-      return result;
-  } else {
-      return false;
-  }
-}
-const getUserID = async (user) => {
-  // const size = user.length
-  var ids = []
-  for(var i in user){
-     const resp = await getUserByUsername(user[i])
-    //  const id = resp.data.id
-    ids.push(resp)
-    // console.log("resp",resp)
-  }
-  return ids;
 
-}
+
 const checkUser = async (user) => {
-  const vb = (user == "not found")
+  const vb = (user === "not found")
   return vb
 }
 const createStake = async(payload) => {
-    const { name, date, amount, creator, decider,supervisor, description,parties, currency, supervisors } = payload;
-    if(amount == null || amount == "" || amount <= 0){
+    const { name, date, amount, creator,currency, decider, description,parties, supervisors } = payload;
+    if(amount == null || amount === "" || amount <= 0){
       swal(
         {
           title: "Required",
@@ -117,11 +96,11 @@ if(!userIds.every(checkUser)){
     data.append('name',name);
     data.append('description', description);
     data.append('amount', amount);
-    data.append('currency', 'NAIRA');
+    data.append('currency', currency);
     data.append('dueDate', date);
-    data.append('supervisors', '61b7b93e6d540f43e42c5442');
+    data.append('supervisors', supervisors);
     userIds.map(id => {
-      data.append('parties', id);
+     return data.append('parties', id);
     })
     
     data.append('decider',decider);
@@ -153,7 +132,7 @@ if(!userIds.every(checkUser)){
           return err.message
       }
   });
-  if(axiosInstance.code == 200){
+  if(axiosInstance.code === 200){
     swal(
         {      
           title:"Congratulations",
@@ -254,7 +233,7 @@ console.log("axiosInstance",axiosInstance)
         </div>
         <div className="inputs">
           <label htmlFor="amount">I want to stake</label>
-          <input type="number" name="amount" required value={amount} onChange={(e)=> {setAmount(e.target.value)}} id="amout" placeholder="$100"/>
+          <input type="number" name="amount" required value={amount} onChange={(e)=> {setAmount(e.target.value)}} id="amout" placeholder="₦100"/>
         </div>
         <div className="inputs">
           <label htmlFor="against">With</label><br/>

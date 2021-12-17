@@ -12,8 +12,21 @@ import passwordIcon from "../images/icons8-password-30.png"
 import bankIcon from "../images/icons8-bank-30.png"
 import editIcon from "../images/icons8-edit-24.png"
 import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 const User = () => {
+    const [user,setUser] = useState("");
+const [name,setName] = useState("")
+   
+   useEffect(() => {
+
+    const l = localStorage.getItem("user");
+    console.log("loks",l)
+    setUser(JSON.parse(l));
+    setName(`${user.first_name} ${user.last_name}`)
+
+   }, []); 
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -39,7 +52,7 @@ const User = () => {
         <div className="details">
             <div className="user-card">
                 <img src={UserAvater} alt=""/>
-                <h3>Jide Joe</h3>
+                <h3>{name}</h3>
                 <div className="user-actions">
                   <NavLink to="/fundwallet">
                     <img src={fundbutton} alt=""/>
@@ -54,22 +67,22 @@ const User = () => {
               <ul>
                 <li>
                     <img className="field-icon" src={UserIcon} alt="Name"/>
-                    <p>Jide Joe</p>
+                    <p>{name}</p>
                     <NavLink to="./edit.html"><img title="Edit Name" src={editIcon} alt="change name"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={usernameIcon} alt="Username"/>
-                    <p>@jidejoe</p>
+                    <p>{user.username}</p>
                     <NavLink to="./edit.html"><img title="Edit Username" src={editIcon} alt="change username"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={emailIcon} alt="Email"/>
-                    <p>jidejoe@mail.com</p>
+                    <p>{user.email}</p>
                     <NavLink to="./edit.html"><img title="edit Email" src={editIcon} alt="change email"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={DobIcon} alt="Birthday"/>
-                    <p>12-10-1989</p>
+                    <p>{user.dob}</p>
                     <NavLink to="./edit.html"><img title="edit date of birth" src={editIcon} alt="change date of birth"/></NavLink>
                 </li>
                 <li>

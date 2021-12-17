@@ -2,9 +2,43 @@ import React from 'react';
 import styled from 'styled-components';
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import User from  "../hooks/User"
+import image808 from "../images/_1930224111808.png"
+import debitCard from "../images/icons8-debit-card-30.png"
+import PeerLogo from "../assets/peer stake logo 1 1.png"
+import bankIcon from "../images/icons8-bank-30.png" 
 import { NavLink } from 'react-router-dom';
+import swal from '@sweetalert/with-react';
 const Fundwallet = () => {
     const {logout} = User()
+
+    const clickDebit = (e) =>{
+        e.preventDefault();
+        swal(
+            {
+                title:"Enter Amount:",
+                content: "input",
+                button: {
+                    text: "Continue",
+                    closeModal: false,
+                }
+            }
+        )
+        .then(amount=> {
+            if(!amount){
+               return  swal(
+                    {
+                        title: "PAyment gateway",
+                        
+                    }
+                )
+            }
+            swal({
+                title: "done",
+                icon: "Ok"
+            })
+        })
+    }
+    const user =JSON.parse( localStorage.getItem("user"))
     return (
         <Fundwallet.Wrapper>
                  <ul className="menu">
@@ -22,35 +56,35 @@ const Fundwallet = () => {
 
 
     <div className="header">
-        <NavLink to="welcome.html"><img src="/images/_1930224111808.png" alt=""/></NavLink>
+        <NavLink to="/welcome"><img src={image808} alt=""/></NavLink>
         {/* <!-- <NavLink to="#"><img src="/images/hamburger.png" alt=""></NavLink> --> */}
     </div>
     <div className="content">
         <div className="details">
             <div className="wallet-card">
-                <h3>Jide Joe</h3>
+                <h3>{`${user.first_name} ${user.last_name}`}</h3>
                 <h2> 
                     <span className="space">
                         <span className="cent">₦</span> 
-                        <span>3,200</span>
+                        <span>{user.wallet.balance}</span>
                     </span>
-                    <span className="cent">.59</span> 
+                    {/* <span className="cent">.59</span>  */}
                 </h2>
                 {/* <!-- <h2>$3,200.<span className="cent">59</span> </h2> --> */}
                 <h3>WALLET BALANCE</h3>
             </div>
             <ul>
-                <li>
+                <li onClick={clickDebit}>
                     <NavLink to="#">
-                        <img className="field-icon" src="/images/icons8-debit-card-30.png" alt="Name"/>
+                        <img className="field-icon" src={debitCard} alt="Name"/>
                         <p>Debit card</p>
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to="./bank.html">
-                        <img className="field-icon" src="/images/icons8-bank-30.png" alt="Username"/>
+                <li onClick={clickDebit}>
+                    <a>   <img className="field-icon" src={bankIcon}alt="bank transfer"/>
                         <p>Bank transfer</p>
-                    </NavLink>
+                        </a>
+                    
                 </li>
                 {/* <!-- <li>
                     <NavLink to="#">
@@ -64,7 +98,7 @@ const Fundwallet = () => {
 
     <footer>
         <div className="logo">
-            <img src="./assets/peer stake logo 1 1.png" alt=""/>
+            <img src={PeerLogo} alt=""/>
         </div>
         
 
@@ -217,18 +251,18 @@ a{
   }
 
 
-html, body{
+
     height: 100%;
     overflow: auto;
     width: 100%;
     position: relative;
     background: linear-gradient(0deg, rgba(144, 94, 238, 0.3), rgba(144, 94, 238, 0.3)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #7E57C2;
-}
+
 
 
 .header{
     width: 85%;
-    height: 15%;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;

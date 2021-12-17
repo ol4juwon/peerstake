@@ -3,7 +3,9 @@ import { NavLink } from "react-router-dom"
 import axios from "axios";
 import swal from "@sweetalert/with-react"
 import styled from "styled-components"
-const _axios  = require("axios");
+import logo from "../images/_1930224111808.png"
+import PeerIcon from "../images/Peer Stake Icon.png"
+// const _axios  = require("axios");
 // const axios = _axios.create();
 
 const BASEURL = process.env.REACT_APP_BASEURL
@@ -85,14 +87,14 @@ const Login = () => {
             localStorage.removeItem('token')}
         {localStorage.removeItem('user')}
             <div className="header">
-                <NavLink to="/"><img src="/images/_1930224111808.png" alt="" /></NavLink>
+                <NavLink to="/"><img src={logo} alt="" /></NavLink>
                 {/* <!-- <a href="#"><img src="/images/hamburger.png" alt=""></a> --> */}
             </div>
             <div className="content">
                 <form onSubmit={login}>
                     <NavLink to="#" className="close"><img src="/images/Vector 3.png" alt="" /></NavLink>
-                    <div className="logo"><img src="/images/Peer Stake Icon.png" alt="" /></div>
-                    <h2>Login to peer stake</h2>
+                    <div className="logo"><img src={PeerIcon} alt="" /></div>
+                    <h2>Login to Peerstake</h2>
                     <div className="inputs">
                         <label htmlFor="email">Email</label><br />
                         <input type="email" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name="email" placeholder="Your email" />
@@ -102,7 +104,7 @@ const Login = () => {
                         <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                     </div>
                     <input type="submit" className="submit" value="Log in" /><br />
-                    <div className="forgot"><NavLink to="/forgot_password">Forgot password?</NavLink></div>
+                    <div className="forgot"><NavLink to="/forgot">Forgot password?</NavLink></div>
                 </form>
             </div>
         </Login.Wrapper>
@@ -120,7 +122,7 @@ a{
 
 .header{ 
     width: 85%;
-    height: 10%;
+    height:50px;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -1,7 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import hamburger from  "../assets/menu_black_24dp 1.png"
+import PeerIcon from "../assets/Peer Stake Icon.png"
+import PeerLogo from "../assets/peer stake logo 1 1.png"
+import wallet from "../images/Group 110.png"
+import withdraw from "../images/down.png"
+import searchIcon from "../assets/Union.png"
+import depositIcon from "../images/Group 48.png"
+import withdrawalIcon from "../images/Group 39.png"
+import wonIcon from "../images/Group 48.png"
+import plaid from "../assets/paid_black_24dp 1.png"
 const Transactions = () => {
+const [user,setUser] = useState("")
+    useEffect( ()=>{
+        setUser(JSON.parse(localStorage.getItem('user')))
+    },[])
+
+    const transactions = [
+        {
+            type:"deposit",
+            amount: 800,
+            currency: "₦",
+            description:"lorem ipsum"
+        },
+        {
+            type:"withdrawal",
+            amount: 800,
+            currency: "₦",
+            description:"lorem ipsum"
+        },
+        {
+            type:"funded",
+            amount: 800,
+            currency: "₦",
+            description:"lorem ipsum"
+        },
+        {
+            type:"won",
+            amount: 800,
+            currency: "₦",
+            description:"lorem ipsum"
+        }
+    ]
     return (
         <Transactions.Wrapper>
                <ul className="menu">
@@ -11,18 +52,18 @@ const Transactions = () => {
         <li><NavLink className="menuItem" to="fund_wallet.html">Wallet</NavLink></li>
         <li><NavLink className="menuItem" to="email_login.html">Sign out</NavLink></li>
       </ul>
-      <img src= "./assets/menu_black_24dp 1.png" className="hamburger"></img>
+      <img src={hamburger} className="hamburger" alt=''></img>
 
 
 
 <div className="hero__sec">
     <div>
         <div className="icon">
-            <img src="./assets/Peer Stake Icon.png" alt=""/>
+            <img src={PeerIcon} alt=""/>
         </div>
         <div  className="nav">
-            <NavLink to="welcome.html" id="size">
-            <img src="./assets/peer stake logo 1 1.png" alt=""/>
+            <NavLink to="/welcome" id="size">
+            <img src={PeerLogo} alt=""/>
                 
             </NavLink>
 
@@ -36,23 +77,23 @@ const Transactions = () => {
 <div className="hero__content">
     <h2> 
         <span className="space">
-            <span className="cent">$</span> 
-            <span>3,200</span>
+            <span className="cent">₦</span> 
+            <span>{user.wallet?.balance}</span>
         </span>
-        <span className="cent">.59</span> 
+        <span className="cent"></span> 
     </h2>
     <h3>WALLET BALANCE</h3>
     <div className="btn" >
-        <NavLink to="fund_wallet.html" className="button">
-            <img src="./images/Group 110.png" alt=""/>
+        <NavLink to="/fundwallet" className="button">
+            <img src={wallet} alt=""/>
             <p>FUND YOUR WALLET</p>
         </NavLink>
-        <NavLink to="" className="button">
-            <img src="./images/down.png" alt=""/>
+        <NavLink to="/withdrawal" className="button">
+            <img src={withdraw} alt=""/>
             <p>WITHDRAW</p>
         </NavLink>
     </div>
-    <img src="./assets/paid_black_24dp 1.png" alt=""/>
+    <img src={plaid} alt=""/>
 </div>
 
 
@@ -62,7 +103,7 @@ const Transactions = () => {
         <p>stakes</p>
         <div className="winners-header">
             <div className="yo">
-                <img src="./assets/Union.png" alt=""/>
+                <img src={searchIcon} alt=""/>
     
                 <input type="search" placeholder=" Search" className="form_control"/>    
             </div>
@@ -70,76 +111,23 @@ const Transactions = () => {
     </div>
 
     <div >
-        <div className="run--info">
-            <img src="./images/Group 48.png" alt=""/>
-            <div>
+        {
+            transactions.map((items, index)=>{
+                const icon = (items.type === "deposit"?depositIcon :(items.type === "withdrawal"?withdrawalIcon:(items.type == "funded"?withdrawalIcon:wonIcon))  )
+              console.log(index,icon);
+              return( <div className="run--info">
+                    {/* {console.log(items.type)} */}
+                <img src={icon} alt="" />
                 <div>
-                    <p id="font">Deposit</p>
-                    <p>A 3 set FIFA 22 game against Mathew</p>
+                    <div>
+                        <p id="font">{items.type}</p>
+                        <p>{items.description}</p>
+                    </div>
+                    <span id={items.type=== "withdrawal"? "color":(items.type === "funded"? "color": "")} >{` ${items.currency}${items.amount}`}</span>
                 </div>
-                <span >$100</span>
-            </div>
-        </div>
-        <div className="run--info">
-            <img src="./images/Group 39.png" alt=""/>
-            <div>
-                <div className="trans--font">
-                    <p id="font">Withdrawal</p>
-                    <p>Who Can Peel Boiled Eggs Faster against Bode</p>
-                </div>
-                <span id="color">$80</span>
-            </div>
-        </div>
-        <div className="run--info">
-            <img src="./images/Group 48.png" alt=""/>
-            <div>
-                <div>
-                    <p id="font">Won</p>
-                    <p>A 3 set PES 2019 game against Dimeji</p>
-                </div>
-                <span>$500</span>
-            </div>
-        </div>
-        <div className="run--info">
-            <img src="./images/Group 48.png" alt=""/>
-             <div>
-                <div>
-                    <p id="font">Deposit</p>
-                    <p>Who will win staff of the month against Jamiu</p>
-                </div>
-                <span>$150</span>
-            </div>
-        </div>
-        <div className="run--info">
-            <img src="./images/Group 39.png" alt=""/>
-             <div>
-                <div>
-                    <p id="font">Funded</p>
-                    <p>Top fabric sales against Sandra</p>
-                </div>
-                <span id="color">$100</span>
-            </div>
-        </div>
-        <div className="run--info">
-            <img src="./images/Group 48.png" alt=""/>
-             <div>
-                <div>
-                    <p id="font">Won</p>
-                    <p>A 3 set PES 2019 game against Dimeji</p>
-                </div>
-                <span>$250</span>
-            </div>
-        </div>
-        <div className="run--info">
-            <img src="./images/Group 48.png" alt=""/>
-             <div>
-                <div>
-                    <p id="font">Deposit</p>
-                    <p>Top fabric sales against Sandra</p>
-                </div>
-                <span>$800</span>
-            </div>
-        </div>
+            </div>)
+            })
+        }
     </div>
 
     <NavLink to="#">
@@ -152,7 +140,7 @@ const Transactions = () => {
 
 <footer>
     <div className="logo">
-        <img src="./assets/peer stake logo 1 1.png" alt=""/>
+        <img src={PeerLogo} alt=""/>
     </div>
     
 

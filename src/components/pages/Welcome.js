@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
 import PeerIcon from "../assets/peer stake logo 1 1.png"
+import userIcon from "../images/icons8-user-30.png"
+
 import UserIcon from "../assets/[Downloader 1.png";
 import { useState,useEffect } from "react";
 import transactionIcon from "../assets/transaction.png"
@@ -13,7 +15,6 @@ const Welcome = () => {
 const {logout} = User();
 
   const [user,setUser] = useState('')
-  const [userName,setUserName] = useState('')
   useEffect(()=>{
     const newUser = localStorage.getItem('user')
   
@@ -26,8 +27,8 @@ const {logout} = User();
   const menu = document.querySelector(".menu");
 const menuItems = document.querySelectorAll(".menuItem");
 // const hamburger= document.querySelector(".hamburger");
-const closeIcon= document.querySelector(".closeIcon");
-const menuIcon = document.querySelector(".menuIcon");
+// const closeIcon= document.querySelector(".closeIcon");
+// const menuIcon = document.querySelector(".menuIcon");
 
   function toggleMenu() {
     if (menu.classList.contains("showMenu")) {
@@ -85,7 +86,8 @@ function(menuItem) {
             <div className="hero__content">
                 <p>Welcome! <span id="name">{user.first_name}</span></p>
                 <NavLink to="/user">
-                    <img src={UserIcon} alt=""/>
+                    {/* <span className="fas fa-bank"></span> */}
+                    <img className="fah" src={userIcon} alt=""/>
                 </NavLink>
                 <h2> 
                     <span className="space">
@@ -111,13 +113,13 @@ function(menuItem) {
                     <h2>Running</h2>
                 </div>
             </NavLink>
-           <NavLink to="/run_stakes#stake--invite" >
+           <NavLink to="/Stakes" >
                 <div className="card--2">
                     <p>2</p>
                     <h2>Request</h2>
                 </div>
            </NavLink>
-            <NavLink to="/run_stakes#due--stakes">
+            <NavLink to="/Stake">
                 <div className="card--3">
                     <p>1</p>
                     <h2>Due</h2>
@@ -188,6 +190,9 @@ Welcome.Wrapper = styled.div`
       color: #7E57C2;
     }
     
+    .fah {
+        width: 40px;
+    }
     .hamburger {
       position: absolute;
       z-index: 100;
@@ -256,7 +261,7 @@ Welcome.Wrapper = styled.div`
   .hero__sec{
       background: linear-gradient(356.95deg, #4D2B90 2.36%, #7E57C2 83.13%);
       border-radius: 0px 0px 20px 20px;
-     height: 400px; 
+     height: 350px; 
       background-repeat: no-repeat;
       
   }
@@ -272,12 +277,12 @@ Welcome.Wrapper = styled.div`
       font-size: 14px;
       line-height: 1px;
       
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       
       /* ffffff */
       
       color: #FFFFFF;
-      padding-bottom: 5px;
+      padding-bottom: 2px;
   }
   
   #name{
@@ -288,7 +293,7 @@ Welcome.Wrapper = styled.div`
   .hero__content img{
       border-radius: 50%;
       background: #FFFFFF;
-      /* margin-bottom: 20px; */
+    //  margin-bottom: 20px; 
   
   }
   
@@ -298,7 +303,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: bold;
       font-size: 48px;
-      line-height: 5px;
+      line-height: 1px;
     
       letter-spacing: 0.03em;
       
@@ -337,7 +342,7 @@ Welcome.Wrapper = styled.div`
       /* ffffff */
       
       color: #FFFFFF;
-      padding-bottom: 30px;
+      padding-bottom: 20px;
   
   }
   
@@ -346,19 +351,19 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
-      line-height: 16px;
+      line-height: 1px;
       color: #7E57C2;
       text-transform: uppercase;
       background: #FFFFFF;
       padding: 20px 30px ;
       border-radius: 3px;
-      /* padding-bottom: 30px; */
+    //   /* padding-bottom: 30px; */
   
   }
   
   .hero__content div{
       /* margin-bottom: 20px; */
-      padding-bottom: 10px;
+      padding-bottom: 5px;
   
   }
   
@@ -375,11 +380,11 @@ Welcome.Wrapper = styled.div`
 }
 
 .stakes{
-    margin-top: 2px;
+    margin-top: 1px;
     background: rgb(196, 196, 196, 0.1);
-    /* opacity: 0.1; */
+    // /* opacity: 0.1; */
     border-radius: 6px;
-    padding: 10px;
+    padding: 5px;
     width: 95%;
     margin-left: 2.5%;
 }
@@ -387,8 +392,8 @@ Welcome.Wrapper = styled.div`
 .stakes--card{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 5px;
+    justify-content: space-around;
+    padding: 10px 10px;
 }
   
 
@@ -405,7 +410,7 @@ Welcome.Wrapper = styled.div`
     font-style: normal;
     font-weight: normal;
     font-size: 64px;
-    line-height: 10px;
+    line-height: 1px;
    
     text-align: center;
     // letter-spacing: -0.02em;
@@ -420,7 +425,7 @@ Welcome.Wrapper = styled.div`
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
-    line-height: 10px;
+    line-height: 1px;
     display: flex;
     align-items: flex-end;
     text-align: center;
@@ -512,7 +517,7 @@ Welcome.Wrapper = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 85%;
+      width: 95%;
       margin: 0 auto;
       margin-top: 5%;
       margin-bottom: 5%;
@@ -527,7 +532,8 @@ Welcome.Wrapper = styled.div`
   .fund--wallet{
       background: linear-gradient(356.95deg, #4D2B90 2.36%, #7E57C2 83.13%);
       border-radius: 6px;
-      padding: 10px 12px;
+      padding: 7px 10px;
+      margin: 0px 4px;
   }
   
   .fund--wallet p {
@@ -536,7 +542,7 @@ Welcome.Wrapper = styled.div`
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
-      line-height: 14px;
+      line-height: 10px;
       /* identical to box height, or 100% */
       
      
@@ -551,12 +557,13 @@ Welcome.Wrapper = styled.div`
   
   
   .transaction{
-      display: flex;
+
+    display: flex;
       align-items: center;
       background: #FFFFFF;
       border-radius: 6px;
       border: 1px solid #7E57C2;
-      padding: 10px 12px;
+      padding: 4px 10px;
   }
   
   
