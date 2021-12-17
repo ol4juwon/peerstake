@@ -59,7 +59,7 @@ const {findUser, getUserID} = User();
      console.log("supervisor", supervisor);
       console.log("decider",decider);
     // console.log("onsubmit",formData)
-    createStake({parties,name, date, amount,description,currency ,decider, supervisor, creator});
+    createStake({parties,name, date, amount,description,currency ,decider, supervisor:userSA._id, creator:userSA._id});
 }
    
   
@@ -91,7 +91,7 @@ if(!userIds.every(checkUser)){
 }
 // setCreator(localStorage.getItem("user").)
     var data = new FormData();
-  setCreator(localStorage.getItem("user")._id);
+  setCreator(JSON.parse(localStorage.getItem("user"))._id);
     data.append('creatorId', creator);
     data.append('name',name);
     data.append('description', description);
@@ -163,12 +163,13 @@ if(!userIds.every(checkUser)){
     
     swal(
 {      
-        title:"Error",
-        text:`${axiosInstance.description}`,
+        title:"Couldn't Create Stake",
+        text:`${axiosInstance?.data.error}`,
         icon:"error",
         button: "OK",
 }
     )
+    return;
   }
 console.log("axiosInstance",axiosInstance)
  }
