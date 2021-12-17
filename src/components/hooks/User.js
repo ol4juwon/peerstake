@@ -4,6 +4,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 const BASEURL = process.env.REACT_APP_BASEURL
 const User = () => {
+    const gd =JSON.parse( localStorage.getItem("user"));
+    const [user, setUser] = useState(gd || "")
+
+
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -36,16 +41,44 @@ const User = () => {
 
     }
     const updateProfile =  async (payload) => {
-        const { id, first_name, last_name,username, email, password,dob} = payload
+        let { id, first_name, last_name,username, email, password,dob} = payload
+        if(!id){
+            id = JSON.parse(localStorage.getItem("user"))._id
+        }
+        console.log("id:", id)
         const data = JSON.stringify({id,first_name,last_name, username, email, password, dob});
-        const response =  axios.post(`${BASEURL}/customer/update`, 
+        const response = await axios.put(`${BASEURL}/customer/update`, 
         data,
         {
             headers: {
-                'Content-Type': 'application/json',
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json ",
             }
         })
-        .then(res => res)
+        .then(res =>  res.data)
+        .catch(err =>{
+            if(err.response){
+                console.log("Error:", err.response)
+                return err.response
+            }else if(err.request){
+                console.log("Error:", err.request)
+                return err.request
+            }else{
+                console.log("Error:", err.message)
+                return err.message
+            }
+        });
+        console.log("After update ===>> ",response)
+        if(response.statusCode >= 400){
+            const error = response.data.description || response.data.message;
+            console.log(error)       
+            return error;
+        }
+
+        setUser(response.user)
+        localStorage.setItem("user", JSON.stringify(response.user));
+      console.log("response:", response)
+        return response;
     }
     const getUserID = async (user) => {
         // const size = user.length
@@ -61,7 +94,7 @@ const User = () => {
       }
 
 
-    return {getUserByUsername, logout,findUser, getUserID}
+    return {getUserByUsername, logout,findUser, getUserID,user, updateProfile}
 }
 
 export default User;

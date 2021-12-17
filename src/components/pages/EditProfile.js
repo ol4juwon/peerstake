@@ -1,48 +1,68 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import styled from 'styled-components';
+import User from "../hooks/User";
+import swal from 'sweetalert';
+import PeerLogo from "../images/_1930224111808.png"
+import Hamburger from "../images/hamburger.png"
 import { NavLink } from 'react-router-dom';
 import closeButton from "../images/Vector 3.png"
 const Editprofile = () => {
-    const [user,setUser] = useState();
-    useEffect(()=>{
-        setUser(JSON.parse(localStorage.getItem("user")))
-    },[])
+   const {updateProfile,user} = User();
+   
+    const [first_name, setFirst_name] = useState(`${user?.first_name}`);
+    const [last_name, setLast_name] = useState(`${user?.last_name}`);
+    const [username, setUsername] = useState(`${user?.username}`);
+    const [email, setEmail] = useState(`${user?.email}`);
+    // const [password, setPassword] = useState("");
+    // const [dob, setDob] = useState("");
+    console.log("user:", user)  
+    onsubmit = async  (e) => {
+        e.preventDefault();
+      const response = await  updateProfile({id:user?._id,first_name, last_name, username, email});
+      console.log("response2:", response)
+if(response.code === 0){
+    swal("Profile updated successfully", {
+        icon: "success",
+      });
+}
+    }
+
     return (
         <Editprofile.Wrapper>
-               <div class="header">
-        <NavLink to="welcome.html"><img src="/images/_1930224111808.png" alt=""/></NavLink>
-         <NavLink to="#"><img src="/images/hamburger.png" alt=""/></NavLink>
+               <div className="header">
+        <NavLink to="welcome.html"><img src={PeerLogo} alt=""/></NavLink>
+         <NavLink to="#"><img src={Hamburger} alt=""/></NavLink>
     </div>
-    <div class="content">
+    <div className="content">
         <form action="" method="POST">
-            <NavLink to="/user" class="close"><img src={closeButton} alt=""/></NavLink>
+            <NavLink to="/user" className="close"><img src={closeButton} alt=""/></NavLink>
             <h2>Edit</h2>
-            <div class="inputs">
-                <label for="firstname" >First Name</label><br/>
-                <input type="text" id="firstname" name="firstname" placeholder={user?.first_name}/>
+            <div className="inputs">
+                <label htmlFor="firstname" >First Name</label><br/>
+                <input type="text" id="firstname" value={first_name} onChange={(e)=> {setFirst_name(e.target.value)}} name="firstname" placeholder={user?.first_name}/>
             </div>
-            <div class="inputs">
-                <label for="lastname" >Last Name</label><br/>
-                <input type="text" id="lastname" name="lastname" placeholder={user?.last_name}/>
+            <div className="inputs">
+                <label htmlFor="lastname" >Last Name</label><br/>
+                <input type="text" id="lastname" name="lastname" value={last_name} onChange={(e)=> {setLast_name(e.target.value)}} placeholder={user?.last_name}/>
             </div>
-            <div class="inputs">
-                <label for="username" >Username</label><br/>
-                <input type="text" id="username" name="username" placeholder={user?.username}/>
+            <div className="inputs">
+                <label htmlFor="username" >Username</label><br/>
+                <input type="text" id="username" name="username" value={username} onChange={(e)=> {setUsername(e.target.value)}} placeholder={user?.username}/>
             </div>
-            <div class="inputs">
-                <label for="email">Email</label><br/>
-                <input type="email" id="email" name="email" placeholder={user?.email}/>
+            <div className="inputs">
+                <label htmlFor="email">Email</label><br/>
+                <input type="email" id="email" name="email" value={email} onChange={(e)=> {setEmail(e.target.value)}} placeholder={user?.email}/>
             </div>
-            <div class="inputs">
-                <label for="dob">Date of Birth</label><br/>
-                <input type="date" id="dob" name="dob" defaultValue={user?.dob}/>
+            <div className="inputs">
+                <label htmlFor="dob">Date of Birth</label><br/>
+                <input type="date" id="dob" name="dob" value={user?.dob}/>
             </div>
-            <div class="inputs">
-                <label for="account-name">Bank Account Name</label><br/>
+            <div className="inputs">
+                <label htmlFor="account-name">Bank Account Name</label><br/>
                 <input type="text" id="account-name" name="account-name" placeholder="Your bank account name"/>
             </div>
-            <div class="inputs">
-                <label for="bank">Bank</label><br/>
+            <div className="inputs">
+                <label htmlFor="bank">Bank</label><br/>
                 <select name="bank" id="bank">
                     <option value="none">Select a bank</option>
                     <option value="GTCO">GTCO</option>
@@ -50,11 +70,11 @@ const Editprofile = () => {
                     <option value="UBA">UBA</option>
                 </select>
             </div>
-            <div class="inputs">
-                <label for="account-number">Bank Account Number</label><br/>
+            <div className="inputs">
+                <label htmlFor="account-number">Bank Account Number</label><br/>
                 <input type="text" id="account-number" name="account-number" placeholder="Your bank account number"/>
             </div>
-            <input class="submit" type="submit" value="save"/><br/>
+            <button className="submit" onClick={onsubmit}>Update </button><br/>
         </form>
     </div>
 
@@ -146,7 +166,7 @@ input{
 
 .header{
     width: 85%;
-    height: 10%;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;

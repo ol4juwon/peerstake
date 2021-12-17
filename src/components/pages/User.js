@@ -88,7 +88,7 @@ const [name,setName] = useState("")
                 <li>
                     <img className="field-icon" src={passwordIcon} alt="password"/>
                     <p>**********</p>
-                    <NavLink to="./confirm_email.html"><img title="edit password" src={editIcon} alt="change password"/></NavLink>
+                    <NavLink to="/editprofile"><img title="edit password" src={editIcon} alt="change password"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={bankIcon} alt="bank"/>
