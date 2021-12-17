@@ -43,7 +43,7 @@ const menuItems = document.querySelectorAll(".menuItem");
         // menuIcon.style.display = "none";
     
     }
-    }
+}
     
 // hamburger.addEventListener("click", toggleMenu);
 menuItems.forEach( 
@@ -62,8 +62,6 @@ function(menuItem) {
                     <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
                     <li><NavLink className="menuItem" to="/fundwallet">Wallet</NavLink></li>
                     <li><i className="menuItem" onClick={logout}> Sign out</i></li>
-
-   
                     </ul> 
             <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
           <div className="hero__sec">
@@ -205,7 +203,7 @@ Welcome.Wrapper = styled.div`
     }
     
   .hamburger:hover{
-      transform: rotate(920deg);
+      transform: rotate(720deg);
   }
   
     .closeIcon {

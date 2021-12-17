@@ -10,7 +10,32 @@ import { NavLink } from 'react-router-dom';
 import swal from '@sweetalert/with-react';
 const Fundwallet = () => {
     const {logout} = User()
-
+    const menu = document.querySelector(".menu");
+    const menuItems = document.querySelectorAll(".menuItem");
+    
+    function toggleMenu() {
+        if (menu.classList.contains("showMenu")) {
+            menu.classList.remove("showMenu");
+            menu.style.top = "-100px";
+        
+            // closeIcon.style.display = "none";
+            // menuIcon.style.display = "block";
+        } else {
+            menu.classList.add("showMenu");
+            menu.style.top = "0";
+            console.log("menu:", menu)
+            // closeIcon.style.display = "block";
+            // menuIcon.style.display = "none";
+        
+        }
+        
+    }
+         
+    menuItems.forEach( 
+            function(menuItem) { 
+                    menuItem.addEventListener("click", toggleMenu);
+                }
+         )
     const clickDebit = (e) =>{
         e.preventDefault();
         swal(
@@ -41,17 +66,15 @@ const Fundwallet = () => {
     const user =JSON.parse( localStorage.getItem("user"))
     return (
         <Fundwallet.Wrapper>
-                 <ul className="menu">
+               <ul className="menu">
                
                <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
               <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
               <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
-              <li><NavLink className="menuItem" to="/fund_wallet">Wallet</NavLink></li>
+              <li><NavLink className="menuItem" to="/fundwallet">Wallet</NavLink></li>
               <li><i className="menuItem" onClick={logout}> Sign out</i></li>
-
-
               </ul> 
-      <img src= {Hamburger} className="hamburger" alt="menu"/>
+      <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
 
 
 

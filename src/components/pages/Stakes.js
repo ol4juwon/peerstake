@@ -6,12 +6,48 @@ import Stake from "../hooks/Stake"
 import PeerIcon from "../assets/Peer Stake Icon.png" 
 import PeerLogo from "../images/peer stake logo 1 1.png"
 import claimIcon from "../assets/Group 75.png"
+import closeIcon from "../images/Vector 3.png"
 import disputeIcon from "../assets/Group 82.png"
 import UnionIcon from "../assets/Union.png"
+import  uploadIcon from "../images/icons8-file-30.png"
+import stakersIcon from "../images/icons8-users-30.png"
+import proofIcon from "../images/Vector 3.png"
 const Stakes = () => {
     const {logout} = User();
     const {stake,dueStake} = Stake();
   
+    const formatDate  = (rawDate) => {
+        const date = new Date(rawDate);
+        const day = date.getDate();
+          const month = date.getMonth() + 1;
+          const year = date.getFullYear();
+          const hours = date.getHours();
+          const minutes = date.getMinutes();
+          const dateString = `${day}/${month}/${year} ${hours}:${minutes}`;
+          return dateString;
+    }
+    const claim_popup = document.querySelector('.claim_stake');
+    const upload_popup = document.querySelector('.upload_file');
+        const validation_popup = document.querySelector('.validation');
+        const successful_popup = document.querySelector('.successful_claim');
+        const failed_popup = document.querySelector('.failed_claim');
+        const disputed_popup = document.querySelector('.disputed_claim')
+        const dispute_rejected = document.querySelector('.dispute_rejected')
+        const dispute_accepted = document.querySelector('.dispute_accepted')
+
+
+    // const claim_popup = (e, stake) => {
+    //     e.preventDefault();
+    //     console.log(stake)
+
+    // }
+    function turn_on(popup) {
+        popup.style.display = "flex";
+    }
+
+    function turn_off(popup) {
+        popup.style.display = "none";
+    }
     return (
         <Stakes.Wrapper>
             
@@ -63,24 +99,22 @@ const Stakes = () => {
     <div className="running-stakes" >
     <div className="stakes-invite pad" >
         <table className="table">
-            {/* <div id="running--stakes" name ="running--stakes"></div> */}
-
-
            
-            <tr className='bg'>
+            <thead className='bg'>
                     <th id="td"> SN</th>
                     <th id="td">Amount</th>
                     <th id="td">Due Date</th>
                     <th id="td">Stake Decider</th>
-            </tr>
+            </thead>
     <tbody id="invites--bg">
         {
                stake.map((stake, index) => {
+                   const date = formatDate(stake.dueDate);
                      return (
                       <tr>
                             <td>{index+1}</td>
                             <td>{stake.amount}</td>
-                            <td>{stake.dueDate}</td>
+                            <td>{date}</td>
                             <td>{stake.stake_decider}</td>
                       </tr>
                      )
@@ -159,7 +193,7 @@ const Stakes = () => {
         <table className="table">
 
            
-            <tr className='bg'>
+            <thead className='bg'>
                     <th id="td"> SN</th>
                     <th id="td">Amount</th>
                     <th id="td">Due Date</th>
@@ -168,27 +202,23 @@ const Stakes = () => {
                     <th id="td">Dispute Stake</th>
                     <th id="td">Status</th>
                     
-                </tr>
+                </thead>
     
            <tbody id="invites--bg">
                {
                    dueStake.map((dueStake, index) => {
-                       const date = new Date(dueStake.dueDate);
-                          const day = date.getDate();
-                            const month = date.getMonth() + 1;
-                            const year = date.getFullYear();
-                            const dueDate = `${day}/${month}/${year}`;
+                       const date = formatDate(dueStake.dueDate);
                     return (
                         <tr>
                         <td>{index+1}</td>
                         <td>{dueStake.amount}</td>
-                        <td>{dueDate} </td>
-                        <td>{dueDate.name}</td>
+                        <td>{date} </td>
+                        <td>{dueStake.name}</td>
                          <td>
-                             <NavLink  to="#"><img onclick="turn_on(claim_popup)" className="claim" src={claimIcon} alt=""/></NavLink>
+                             <NavLink  to="#"><img onClick={(e) =>{turn_on(claim_popup)}} className="claim" src={claimIcon} alt=""/></NavLink>
                          </td>
                          <td>
-                             <NavLink  to="#"><img onclick="turn_on(upload_popup)" src={disputeIcon} alt=""/></NavLink>
+                             <NavLink  to="#"><img onClick={(e) =>turn_on(upload_popup)} src={disputeIcon} alt=""/></NavLink>
      
                          </td>
                          <td>{dueStake.claimed? "Settled":"Not settled"}</td>
@@ -220,7 +250,90 @@ const Stakes = () => {
             <NavLink  to="#">Legal</NavLink>
         </div>
     </footer>
+    <div className="cover claim_stake" onClick={(e)=>{turn_off(claim_popup)}}>
+        <div className="card">
+          <img className="close" src={closeIcon} onClick={(e) => turn_off(claim_popup)} alt=""/>
+          <a className="proof" onClick={(e)=>turn_on(upload_popup)}>
+              <img src={uploadIcon} alt=""/>
+              <p>UPLOAD PROOF</p>
+          </a>
+          <a href="#" onClick={(e)=>turn_on(disputed_popup)}>
+            <img src={stakersIcon} alt=""/>
+            <p>ASK OTHER STAKERS TO CONFIRM</p>
+          </a>
+        </div>
+    </div>
+       <div className="cover upload_file">
+         <div className="card">
+           <img className="close" onClick={(e)=>turn_off(upload_popup)} src={proofIcon} alt=""/>
+          <p>Please upload photo or video proof</p>
+          <form action="">
+            <input type="file" name="proof" className="proof"/>
+            <input type="submit" value="upload" className="upload" onClick={(e)=>  turn_on(validation_popup)}/>
+            </form>
+        </div>
+    </div>
 
+    <div className="cover validation" onClick={(e)=>turn_off(validation_popup)}>
+        <div className="card">
+           <img className="close" src="/images/Vector 3.png" alt="" onClick={(e)=>turn_off(validation_popup)}/>
+           <p>Your proof would be reviewed and confirmed soon.</p>
+           <div onClick={(e)=>turn_on(successful_popup)} className="claim_successful">Continue</div>
+         </div>
+    </div>
+
+     <div className="cover successful_claim" onClick={(e)=>turn_off(successful_popup)}>
+         <div className="card">
+           <img className="close" src="/images/Vector 3.png" alt="close" onClick={(e)=>turn_off(successful_popup)}/>
+           <h3>Congratulations!</h3>
+           <p>You have won this stake</p>
+           <img className="success_img" src="/images/Tick success.png" alt=""/>
+           <div> continue </div>
+         </div>
+     </div>
+
+    <div className="cover failed_claim" onClick={(e)=>turn_off(failed_popup)}>
+         <div className="card">
+           <img className="close" src={closeIcon} alt=""/>
+           <h3>Sorry!</h3>
+           <p>Your proof does not validate this claim</p>
+           <img className="failed_img" src="/images/icons8-cancel.svg" alt=""/>
+           <div onClick={(e)=>turn_on(upload_popup)}> Try Again </div>
+         </div>
+    </div>
+
+    <div className="cover disputed_claim" onClick={(e)=>turn_off(disputed_popup)}>
+         <div className="card">
+           <img className="close" src={closeIcon} alt=""/>
+           <h3>Sorry!</h3>
+           <p>Your claim has been disputed</p>
+           <p>Upload proof of win</p>
+           <img className="failed_img" src="/images/icons8-cancel.svg" alt=""/>
+           <div onClick={(e)=>turn_on(upload_popup)}> Upload Proof </div>
+         </div>
+    </div>
+
+    <div className="cover dispute_rejected" onClick={(e)=>turn_off(dispute_rejected)}>
+         <div className="card">
+           <img className="close" src="/images/Vector 3.png" alt=""/>
+           <h3>Sorry!</h3>
+           <p>Your dispute has been rejected</p>
+           <img className="failed_img" src="/images/icons8-cancel.svg" alt=""/>
+           <div onClick={(e)=>turn_off(dispute_rejected)}> Continue </div>
+         </div>
+     </div>
+
+    <div className="cover dispute_accepted" onClick={(e)=>turn_off(dispute_accepted)}>
+         <div className="card">
+           <img className="close" src="/images/Vector 3.png" alt="close" onClick={(e)=>turn_off(successful_popup)}/>
+           <h3>Congratulations!</h3>
+           <p>Thank you for your submission</p>
+           <p>Resolution in progress</p>
+           <img className="success_img" src="/images/Tick success.png" alt=""/>
+           <div onClick={(e)=>turn_off(dispute_accepted)}> continue </div>
+         </div>
+     </div>
+{/* */}
 
         </Stakes.Wrapper>
     );
@@ -591,13 +704,13 @@ footer{
 
 
 .table{
-    // width: 100vw;
+    width: 100vw;
     border-collapse: collapse;
 }
 
 .table td{
     text-align: center;
-    // white-space: nowrap;
+    white-space: nowrap;
 }
 
 

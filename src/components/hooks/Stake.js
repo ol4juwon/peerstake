@@ -49,7 +49,7 @@ useEffect(() => {
    console.log("stake fror gere is ", stake)
     
 }, [])
-console.log("stake fror gere is3 ", stake)
+// console/.log("stake fror gere is3 ", stake)
 
 return {stake,dueStake,createStake}
 
