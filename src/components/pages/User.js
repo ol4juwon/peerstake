@@ -52,7 +52,7 @@ const [name,setName] = useState("")
         <div className="details">
             <div className="user-card">
                 <img src={UserAvater} alt=""/>
-                <h3>{name}</h3>
+                <h3>{`${user?.first_name} ${user?.last_name}`}</h3>
                 <div className="user-actions">
                   <NavLink to="/fundwallet">
                     <img src={fundbutton} alt=""/>
@@ -67,23 +67,23 @@ const [name,setName] = useState("")
               <ul>
                 <li>
                     <img className="field-icon" src={UserIcon} alt="Name"/>
-                    <p>{name}</p>
-                    <NavLink to="./edit.html"><img title="Edit Name" src={editIcon} alt="change name"/></NavLink>
+                    <p>{`${user.first_name} ${user.last_name}`}</p>
+                    <NavLink to="/editprofile"><img title="Edit Name" src={editIcon} alt="change name"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={usernameIcon} alt="Username"/>
                     <p>{user.username}</p>
-                    <NavLink to="./edit.html"><img title="Edit Username" src={editIcon} alt="change username"/></NavLink>
+                    <NavLink to="/editprofile"><img title="Edit Username" src={editIcon} alt="change username"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={emailIcon} alt="Email"/>
                     <p>{user.email}</p>
-                    <NavLink to="./edit.html"><img title="edit Email" src={editIcon} alt="change email"/></NavLink>
+                    <NavLink to="/editprofile"><img title="edit Email" src={editIcon} alt="change email"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={DobIcon} alt="Birthday"/>
                     <p>{user.dob}</p>
-                    <NavLink to="./edit.html"><img title="edit date of birth" src={editIcon} alt="change date of birth"/></NavLink>
+                    <NavLink to="/editprofile"><img title="edit date of birth" src={editIcon} alt="change date of birth"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={passwordIcon} alt="password"/>
@@ -97,7 +97,7 @@ const [name,setName] = useState("")
                         <p>Jide Johnson Joe</p>
                         <p>123456789</p>
                     </div>
-                    <NavLink to="./edit.html"><img title="edit bank details"src={editIcon} alt="change bank details"/></NavLink>
+                    <NavLink to="/editprofile"><img title="edit bank details"src={editIcon} alt="change bank details"/></NavLink>
                 </li>
             </ul>
             <div className="delete-account">

@@ -11,38 +11,16 @@ import depositIcon from "../images/Group 48.png"
 import withdrawalIcon from "../images/Group 39.png"
 import wonIcon from "../images/Group 48.png"
 import plaid from "../assets/paid_black_24dp 1.png"
+import Transaction from "../hooks/Transactions"
 const Transactions = () => {
+const {transactions} = Transaction();
+
 const [user,setUser] = useState("")
     useEffect( ()=>{
         setUser(JSON.parse(localStorage.getItem('user')))
     },[])
 
-    const transactions = [
-        {
-            type:"deposit",
-            amount: 800,
-            currency: "₦",
-            description:"lorem ipsum"
-        },
-        {
-            type:"withdrawal",
-            amount: 800,
-            currency: "₦",
-            description:"lorem ipsum"
-        },
-        {
-            type:"funded",
-            amount: 800,
-            currency: "₦",
-            description:"lorem ipsum"
-        },
-        {
-            type:"won",
-            amount: 800,
-            currency: "₦",
-            description:"lorem ipsum"
-        }
-    ]
+  
     return (
         <Transactions.Wrapper>
                <ul className="menu">

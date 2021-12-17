@@ -35,6 +35,18 @@ const User = () => {
 
 
     }
+    const updateProfile =  async (payload) => {
+        const { id, first_name, last_name,username, email, password,dob} = payload
+        const data = JSON.stringify({id,first_name,last_name, username, email, password, dob});
+        const response =  axios.post(`${BASEURL}/customer/update`, 
+        data,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res => res)
+    }
     const getUserID = async (user) => {
         // const size = user.length
         var ids = []

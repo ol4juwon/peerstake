@@ -6,6 +6,7 @@ import Signup from './components/pages/Signup';
 import Login from './components/pages/Login';
 import Welcome from './components/pages/Welcome'
 import dotenv from "dotenv";
+import EditProfile from './components/pages/EditProfile';
 import Create from './components/pages/Create';
 import Forgot from './components/pages/Forgot';
 import ResetPassword from './components/pages/ResetPassword';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/stakes"  component={Stakes} />
         <Route path="/Forgot" exact component={Forgot} />
         <Route path="/User" component={User } />
+        <Route path={"/editprofile"} component={EditProfile} />
         <Route path={"/Fundwallet"} component={Fundwallet } />
         <Route path="/Transactions" exact component={Transactions} />
         <Route path="/ResetPassword" exact component={ResetPassword}/>
