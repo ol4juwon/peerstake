@@ -3,6 +3,8 @@ import {useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import moment from "moment";
+import { $CombinedState } from "redux";
+import swal from "sweetalert";
 const Test =require( "../images/_1930224111808.png");
 
 const BASEURL = process.env.REACT_APP_BASEURL
@@ -16,11 +18,35 @@ const Signup = () =>   {
     const [phone, setPhone] = useState('');
     // const [address, setAddress] = useState('');
     // const [gender,setGender ] = useState('');
+    var today = new Date();
+    var year= today.getFullYear()-18;
+    const month = today.getMonth();
+    const day = today.getDate();
+    
+    const minDate = year+"-"+month+"-"+day;
+   const invalidUserName = (e) => {
+    e.preventDefault();
+    if(e.target.value.length <5){
+        e.setCustomValidity("Username must be at least 5 characters long");
+    }
+   }
     const [dob,setDob] =useState('');
     const onsubmit = (e) => {
         e.preventDefault();
+        if(username.length <5){
+            swal(
+                "Username must be at least 5 characters long",
+            )
+            return;
+        }
         console.log("dob",dob)
-        const DOB = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
+        const date = new Date(dob);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        const DOB =day + "/" + month + "/" + year ;
+        console.log("DOB",DOB)
+        // const  = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
         register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password:password, confirm_password: password, email, username});
     }
 
@@ -58,7 +84,7 @@ const Signup = () =>   {
                 return err.message
             }
         });
-    
+    console.log("response",response);
         if(response.user){
             alert("User registered successfully");
             window.location.href = '/login';
@@ -110,11 +136,11 @@ const Signup = () =>   {
             
             <div className="inputs">
                 <label htmlFor="dob">Date of Birth</label><br/>
-                <input type="date"  value={dob} min={moment(date).subtract(18,'y')} required onChange={(e) => {setDob(e.target.value)}} id="dob" name="dob"/>
+                <input type="date"  value={dob} max={minDate} required onChange={(e) => {setDob(e.target.value)}} id="dob" name="dob"/>
             </div>
             <div className="inputs">
                 <label htmlFor="username">Username</label><br/>
-                <input type="text" minLength="4" required value={username} onChange={(e) => { setUsername(e.target.value)}} placeholder="Username"/>
+                <input type="text"    value={username} onChange={(e) => { setUsername(e.target.value)}} placeholder="Username"/>
             </div>
             <div className="inputs">
                 <label htmlFor="password">Password</label><br/>
@@ -130,7 +156,7 @@ const Signup = () =>   {
             </div> --> */}
             <div className="terms_conditions">
                 <input type="checkbox" id="terms" required name="terms" value="terms" />
-                <label htmlFor="terms" className="terms">I accept the terms and condition of PeerStake</label>
+                <label htmlFor="terms" className="terms">Kindly accept the terms and conditions to proceed.</label>
             </div>
             <input className="submit" type="submit" value="Sign Up"/><br/>
     
