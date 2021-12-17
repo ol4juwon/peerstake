@@ -257,7 +257,7 @@ console.log("axiosInstance",axiosInstance)
               Share
             </NavLink>  */}
         
-        <button onClick={(e) => {setForms(e)}}> Create Stake</button> 
+        <button className='submit' onClick={(e) => {setForms(e)}}> Create Stake</button> 
       </form>
     </div>
     <footer>

@@ -6,7 +6,6 @@ import Icon from "../assets/Peer Stake Icon.png";
 import PeerIcon from "../assets/peer stake logo 1 1.png"
 import userIcon from "../images/icons8-user-30.png"
 
-import UserIcon from "../assets/[Downloader 1.png";
 import { useState,useEffect } from "react";
 import transactionIcon from "../assets/transaction.png"
 import AddIcon from "../assets/Group 54.png"

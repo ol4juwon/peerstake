@@ -51,7 +51,7 @@ const [name,setName] = useState("")
     <div className="content">
         <div className="details">
             <div className="user-card">
-                <img src={UserAvater} alt=""/>
+                <img src={UserIcon} alt=""/>
                 <h3>{`${user?.first_name} ${user?.last_name}`}</h3>
                 <div className="user-actions">
                   <NavLink to="/fundwallet">
@@ -88,7 +88,7 @@ const [name,setName] = useState("")
                 <li>
                     <img className="field-icon" src={passwordIcon} alt="password"/>
                     <p>**********</p>
-                    <NavLink to="/editprofile"><img title="edit password" src={editIcon} alt="change password"/></NavLink>
+                    <NavLink to="./confirm_email.html"><img title="edit password" src={editIcon} alt="change password"/></NavLink>
                 </li>
                 <li>
                     <img className="field-icon" src={bankIcon} alt="bank"/>
