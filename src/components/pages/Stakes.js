@@ -61,6 +61,7 @@ const Stakes = () => {
                 </div>
             </div>
     <div className="running-stakes" >
+    <div className="stakes-invite pad" >
         <table className="table">
             {/* <div id="running--stakes" name ="running--stakes"></div> */}
 
@@ -72,8 +73,8 @@ const Stakes = () => {
                     <th id="td">Due Date</th>
                     <th id="td">Stake Decider</th>
             </tr>
-    
-           {
+    <tbody id="invites--bg">
+        {
                stake.map((stake, index) => {
                      return (
                       <tr>
@@ -85,11 +86,12 @@ const Stakes = () => {
                      )
                 })
            }
-               
+        </tbody>
+                  
         </table>
     
     </div>
- 
+ </div>
     
         <div className="stakes">
             <div id="stake--invite" name ="stake--invite"></div>
@@ -697,7 +699,7 @@ td{
 
 .due{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background: linear-gradient(356.95deg, #D43838 2.36%, #F75C5C 83.13%);
     border-radius: 3px;
