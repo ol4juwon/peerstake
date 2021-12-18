@@ -46,24 +46,23 @@ const menuItems = document.querySelectorAll(".menuItem");
 }
     
 // hamburger.addEventListener("click", toggleMenu);
-menuItems.forEach( 
-function(menuItem) { 
-        menuItem.addEventListener("click", toggleMenu);
-    }
-)
+// menuItems.forEach( 
+// function(menuItem) { 
+//         menuItem.addEventListener("click", toggleMenu);
+//     }
+// )
     return(
       
         <Welcome.Wrapper>
           {localStorage.getItem("user") ?"" : <Redirect to="/login"/>}
-             <ul className="menu">
-               
-                     <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
-                    <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
-                    <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
-                    <li><NavLink className="menuItem" to="/fundwallet">Wallet</NavLink></li>
-                    <li><i className="menuItem" onClick={logout}> Sign out</i></li>
-                    </ul> 
-            <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
+          <ul className="menu">       
+        <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
+        <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
+        <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
+        <li><NavLink className="menuItem" to="/fund_wallet">Wallet</NavLink></li>
+        <li><i className="menuItem" onClick={logout}> Sign out</i></li>
+        </ul> 
+      <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
           <div className="hero__sec">
             <div>
                 <div className="icon">
@@ -159,6 +158,7 @@ function(menuItem) {
             <NavLink to="#">Legal</NavLink>
         </div>
     </footer>
+    <script src="./javascript/hamburger.js"></script>
         </Welcome.Wrapper>
     )
 }
@@ -174,6 +174,20 @@ Welcome.Wrapper = styled.div`
 a{
     text-decoration: none;
 }
+.hamburger {
+    position: absolute;
+    z-index: 100;
+    top: 2.4rem;
+    right: 1rem;
+    padding: 4px;
+    /* border: black solid 1px; */
+    /* background: white; */
+    cursor: pointer;
+    transition: all 1s;
+  &:hover{
+    transform: rotate(720deg);
+}}
+
 .nav{
     display: flex;
     justify-content: space-between;
@@ -305,6 +319,9 @@ a{
     .showMenu {
         transform: translateY(0);
       }
+
+
+  }
 .menuItem {
     display: block;
     margin: 2rem 4rem;
@@ -318,24 +335,6 @@ a{
     /* text-decoration: underline; */
     color: #7E57C2;
   }
-
-  }
-  .hamburger {
-    position: absolute;
-    z-index: 100;
-    top: 2.4rem;
-    right: 1rem;
-    padding: 4px;
-    /* border: black solid 1px; */
-    /* background: white; */
-    cursor: pointer;
-    transition: all 1s;
-  }
-  
-.hamburger:hover{
-    transform: rotate(720deg);
-}
-
 .closeIcon {
     display: none;
   }

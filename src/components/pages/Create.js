@@ -32,6 +32,7 @@ const {findUser, getUserID} = User();
     }
     }
   const { getUserByUsername, logout } = User();
+  const [supervisors,setSupervisors] = useState("")
    const [parties, setParties] = useState("");
   const [date, setDate] = useState(new Date());
   const [user,setUser] = useState('')
@@ -39,7 +40,6 @@ const {findUser, getUserID} = User();
   const [currency,setCurrency] = useState("NGN")
   const [amount, setAmount] = useState('');
    const [creator, setCreator] = useState("");
-   const [supervisor, setSupervisor] = useState("");
    const [decider, setDecider] = useState("");
   //  const [formData, setFormData] = useState("")
    const [description, setDescription] = useState("");
@@ -52,14 +52,12 @@ const {findUser, getUserID} = User();
      console.log("description",description);
      const usse = localStorage.getItem("user");
       const userSA = JSON.parse(usse);
-      console.log("userSA:", userSA._id)
       setCreator(`${userSA._id}`);
-      setSupervisor(`${userSA._id}`);
      console.log("creator",creator);
-     console.log("supervisor", supervisor);
+     console.log("supervisor", supervisors);
       console.log("decider",decider);
     // console.log("onsubmit",formData)
-    createStake({parties,name, date, amount,description,currency ,decider, supervisor:userSA._id, creator:userSA._id});
+    createStake({parties,name, date, amount,description,currency ,decider, supervisors, creator:userSA._id});
 }
    
   
@@ -89,6 +87,11 @@ console.log("userIds",userIds)
 if(!userIds.every(checkUser)){
   alert("please enter valid parties")
 }
+const sid = findUser(supervisors)
+const supervisorIds = await getUserID(sid)
+if(!supervisorIds.every(checkUser)){
+  alert("please enter valid supervisors")
+}
 // setCreator(localStorage.getItem("user").)
     var data = new FormData();
   setCreator(JSON.parse(localStorage.getItem("user"))._id);
@@ -98,11 +101,13 @@ if(!userIds.every(checkUser)){
     data.append('amount', amount);
     data.append('currency', currency);
     data.append('dueDate', date);
-    data.append('supervisors', supervisors);
+   
     userIds.map(id => {
      return data.append('parties', id);
     })
-    
+    supervisorIds.map(id => {
+      return data.append('supervisors', id)
+    })
     data.append('decider',decider);
 
     
@@ -252,7 +257,12 @@ console.log("axiosInstance",axiosInstance)
           <label htmlFor="Decider">Decider for dispute resolution</label><br/>
           <input type="" name="Decider" id="Decider" value={decider} required onChange={(e)=>setDecider(e.target.value)} placeholder="picture of the score boardl"/>
         </div>
+        <div className="inputs">
+          <label htmlFor="Supervisors">Supervisor</label><br/>
+          <input type="" name="Supervisors" id="Supervisors" value={supervisors} required onChange={(e)=>setSupervisors(e.target.value)} placeholder="supervisor username e.g @admin"/>
+        </div>
         
+           
             
             {/* <NavLink to="/stakes" type="submit" className="submit">
               Share
