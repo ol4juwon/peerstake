@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import googleIcon from "../images/google.png";
 import facebookIcon from "../images/facebook.png"
 import appleIcon from "../images/apple.png"
-// import fman from "../images/peer stake logo 1 1.png"
+import fman from "../images/peer stake logo 1 1.png"
 import background from "../assets/[Downloader\ 2.png"
 const url = "../assets/[Downloader\ 2.png";
 const Home = () => {
@@ -16,7 +16,8 @@ const Home = () => {
         {localStorage.removeItem('user')}
             
             <div className="logo">
-         {/* <img src={fman} alt=""/>  */}
+         <img src={fman} alt=""/> 
+         {/* <img src={background} alt=""/>  */}
     </div>
     <div>
         <NavLink className="button" to="#">
@@ -41,13 +42,18 @@ const Home = () => {
 
 Home.Wrapper = styled.div`
 
-
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
     width: 100%;
     height: 100vh;
     padding: 5%;
     background-color: #E5E5E5;
-    background: linear-gradient(3.33deg, rgb(68, 35, 133) 16.43%, rgba(154, 115, 231, 0) 141.44%), url(${background});
+    background: linear-gradient(3.33deg, rgb(68, 35, 133) 16.43%, rgba(154, 115, 231, 0) 141.44%), url('${background}');
+    // background-image: url(${background});
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     mix-blend-mode: multiply;
     box-sizing: border-box;
