@@ -17,6 +17,8 @@ const Stakes = () => {
     const {stake,dueStake} = Stake();
   
     const formatDate  = (rawDate) => {
+        console.log("Date ==> ",rawDate);
+        
         const date = new Date(rawDate);
         const day = date.getDate();
           const month = date.getMonth() + 1;
@@ -109,7 +111,8 @@ const Stakes = () => {
     <tbody id="invites--bg">
         {
                stake.map((stake, index) => {
-                   const date = formatDate(stake.dueDate);
+                   console.log("Mapped date ",stake);
+                   const date = formatDate(stake.due_date);
                      return (
                       <tr>
                             <td>{index+1}</td>
@@ -207,7 +210,7 @@ const Stakes = () => {
            <tbody id="invites--bg">
                {
                    dueStake.map((dueStake, index) => {
-                       const date = formatDate(dueStake.dueDate);
+                       const date = formatDate(dueStake.due_date);
                     return (
                         <tr>
                         <td>{index+1}</td>

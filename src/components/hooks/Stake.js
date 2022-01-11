@@ -36,8 +36,9 @@ const getStakeByUser = async (id) => {
 
   setStake(response.data.stakes)
   const res = response.data.stakes;
+  console.log(res)
   const newarr = res.filter(stake => {
-   const date = new Date(stake.dueDate)
+   const date = new Date(stake.due_date)
    return date < Date.now()})
    setDueStake(newarr)
 //   console.log(stake)

@@ -116,7 +116,7 @@ const Signup = () =>   {
             console.log("error",error);
             swal({
                 title: "User registration failed",
-                text: error.response.error,
+                text: error || error.response.error,
             })
             return;
         }
