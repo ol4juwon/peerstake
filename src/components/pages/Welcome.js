@@ -19,7 +19,7 @@ console.log("user stake:", stake)
 console.log("user dueStake:", dueStake)
   console.log("Storage user",user.token)
   const menu = document.querySelector(".menu");
-const menuItems = document.querySelectorAll(".menuItem");
+// const menuItems = document.querySelectorAll(".menuItem");
 
  useEffect(()=>{
     const newUser = localStorage.getItem('user')
@@ -316,11 +316,12 @@ a{
     list-style: none;
     padding-top: 4rem;
     text-align:center;
-    .showMenu {
-        transform: translateY(0);
-      }
+   
 
 
+  }
+  .showMenu {
+    transform: translateY(0);
   }
 .menuItem {
     display: block;

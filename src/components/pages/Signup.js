@@ -18,6 +18,7 @@ const Signup = () =>   {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
+    const [terms, setTerms] = useState(false);
     // const [address, setAddress] = useState('');
     // const [gender,setGender ] = useState('');
     var today = new Date();
@@ -51,6 +52,36 @@ const Signup = () =>   {
              } )
             return;
         }
+        if(firstName.length < 2){
+            swal({
+                text:"First name must be at least 2 characters long",
+                icon: "warning",
+             } )
+            return;
+        }
+        if(lastName.length < 2){
+            swal({
+                text:"Last name must be at least 2 characters long",
+                icon: "warning",
+
+                } )
+            return;
+        }
+        if(phone.length < 10){
+            swal({
+                text:"Phone number must be at least 10 characters long",
+                icon: "warning",
+                } )
+            return;
+        }
+        if(terms === false){
+            swal({
+                text:"You must agree to the terms and conditions",
+                icon: "warning",
+                } )
+            return;
+        }
+        
         console.log("dob",dob)
         const date = new Date(dob);
         const day = date.getDate();
@@ -115,7 +146,7 @@ const Signup = () =>   {
         // console.log(response);
         const datum =response;
         // console.log(datum.data?.status);
-        if(datum.status >= 400 || datum.data.statusCode >= 400){
+        if(datum.status !== "failed" || datum.status >= 400 || datum.data.statusCode >= 400){
             const error = datum.error //|| datum.data.message || datum.data.error.message;
             console.log("error",error);
             swal({
@@ -137,12 +168,12 @@ const Signup = () =>   {
         {/* <!-- <a href="#"><img src="/images/Vector.png" alt=""></a> --> */}
             </div>
             <div className="content">
-                <form onSubmit={onsubmit}>
+                <form>
             <NavLink to="#" className="close"><img src="/images/Vector 3.png" alt=""/></NavLink>
             <h2>Sign up</h2>
             <div className="inputs">
                 <label htmlFor="firstname" >First Name</label><br/>
-                <input type="text" value={firstName} required name="firstname" placeholder="First name" onChange={(e)=>{setFirstName(e.target.value)}}/>
+                <input type="text" value={firstName} required={true} name="firstname" placeholder="First name" onChange={(e)=>{setFirstName(e.target.value)}}/>
             </div>
             <div className="inputs">
                 <label htmlFor="lastname" >Last Name</label><br/>
@@ -187,10 +218,10 @@ const Signup = () =>   {
                 </select>
             </div> --> */}
             <div className="terms_conditions">
-                <input type="checkbox" id="terms" required name="terms" value="terms" />
+                <input type="checkbox" id="terms" required name="terms" onChange={(e) => {setTerms(!terms)}} value="terms" />
                 <label htmlFor="terms" className="terms">Kindly accept the terms and conditions to proceed.</label>
             </div>
-            <input className="submit" type="submit" value="Sign Up"/><br/>
+            <input className="submit" type="submit" onClick={(e) => {onsubmit(e)}} value="Sign Up"/><br/>
     
         </form>
     </div>
