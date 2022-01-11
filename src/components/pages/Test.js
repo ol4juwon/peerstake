@@ -1,111 +1,51 @@
-import { NavLink, Redirect } from "react-router-dom";
-import User from "../hooks/User"
-import styled from "styled-components";
-import Hamburger from "../assets/menu_black_24dp 1.png";
-import Icon from "../assets/Peer Stake Icon.png";
-import PeerIcon from "../assets/peer stake logo 1 1.png"
-import userIcon from "../images/icons8-user-30.png"
-import Stakes from "../hooks/Stake"
-import { useState,useEffect } from "react";
-import transactionIcon from "../assets/transaction.png"
-import AddIcon from "../assets/Group 54.png"
-// import NavBar from "../NavBar";
-const Welcome = () => {
-const {logout} = User();
-const {stake,dueStake} = Stakes();
-  const [user,setUser] = useState('')
-
-console.log("user stake:", stake)
-console.log("user dueStake:", dueStake)
-  console.log("Storage user",user.token)
-  const menu = document.querySelector(".menu");
-const menuItems = document.querySelectorAll(".menuItem");
-
- useEffect(()=>{
-    const newUser = localStorage.getItem('user')
-  
-    const k = JSON.parse(newUser)
-    setUser(k)
-    
-  },[])
-
-  function toggleMenu() {
-    if (menu.classList.contains("showMenu")) {
-        menu.classList.remove("showMenu");
-        menu.style.top = "-100px";
-    
-        // closeIcon.style.display = "none";
-        // menuIcon.style.display = "block";
-    } else {
-        menu.classList.add("showMenu");
-        menu.style.top = "0";
-        // closeIcon.style.display = "block";
-        // menuIcon.style.display = "none";
-    
-    }
-}
-    
-// hamburger.addEventListener("click", toggleMenu);
-// menuItems.forEach( 
-// function(menuItem) { 
-//         menuItem.addEventListener("click", toggleMenu);
-//     }
-// )
-    return(
-      
-        <Welcome.Wrapper>
-          {localStorage.getItem("user") ?"" : <Redirect to="/login"/>}
-          <ul className="menu">       
-        <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
-        <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
-        <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
-        <li><NavLink className="menuItem" to="/fund_wallet">Wallet</NavLink></li>
-        <li><i className="menuItem" onClick={logout}> Sign out</i></li>
-        </ul> 
-      <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
-          <div className="hero__sec">
+import React from 'react';
+import styled from 'styled-components';
+import background from "../assets/[Downloader\ 2.png";
+import NavLink from 'react-router-dom/NavLink';
+import logo from "../assets/Peer Stake Icon.png"
+const Test = () => {
+    return (
+        <Test.Wrapper>
+             <ul className="menu">
+               
+               <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
+              <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
+              <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
+              <li><NavLink className="menuItem" to="/fundwallet">Wallet</NavLink></li>
+              <li><i className="menuItem" > Sign out</i></li>
+              </ul> 
+      <img src={logo} className="hamburger" alt=""/>
+            <div className='hero--sec'>
+            
+            <div><div className="icon">
+                <img src={logo} alt=""/>
+            </div>
+                </div>
+                <div className="hero__content">
+            <p>Welcome! <span id="name">Jide</span></p>
+            <a href="user.html">
+                <img src="./assets/[Downloader 1.png" alt=""/>
+            </a>
+            <h2> 
+                <span classNam="space">
+                    <span className="cent">$</span> 
+                    <span>3,200</span>
+                </span>
+                <span className="cent">.59</span> 
+            </h2>
+            <h3>WALLET BALANCE</h3>
             <div>
-                <div className="icon">
-                    <NavLink to="/welcome">
-                    <img src={Icon} alt=""/>
-                    </NavLink>
-                </div>
-                <div  className="nav">
-                    <NavLink to="/welcome"> 
-                    <img src={PeerIcon} alt=""/>
-                     {/* <img src={Icon} alt=""/> */}
-                    </NavLink>
-                  
-                </div>
-              
+                <a href="create.html" id="hero-content">CREATE STAKE</a>
             </div>
-            <div className="hero__content">
-                <p>Welcome! <span id="name">{user.first_name}</span></p>
-                <NavLink to="/user">
-                    {/* <span className="fas fa-bank"></span> */}
-                    <img className="fah" src={userIcon} alt=""/>
-                </NavLink>
-                <h2> 
-                    <span className="space">
-                        <span className="cent">₦</span> 
-                        <span>{user?.wallet?.balance}</span>
-                    </span>
-                    <span className="cent"></span> 
-                </h2>
-                <h3>WALLET BALANCE</h3>
-                <div>
-                    <NavLink to="/Create" id="hero-content">CREATE STAKE</NavLink>
-                </div>
-                {/* <!-- <img src="./assets/paid_black_24dp 1.png" alt=""> --> */}
+            {/* <!-- <img src="./assets/paid_black_24dp 1.png" alt=""> --> */}
+        </div>
             </div>
-          </div>
-
-          <div className="stakes">
+            <div className="stakes">
                 <p>Stakes</p>
         <div className="stakes--card">
             <NavLink to="/stakes" >
                 <div className="card--1">
-                    <p>{stake.length || 0}</p>
+                    <p>{ 0}</p>
                     <h2>Running</h2>
                 </div>
             </NavLink>
@@ -117,8 +57,8 @@ const menuItems = document.querySelectorAll(".menuItem");
            </NavLink>
             <NavLink to="/Stake">
                 <div className="card--3">
-                    <p>{dueStake.length}</p>
-                    <h2>   Due</h2>
+                    <p>{1}</p>
+                    <h2>Due</h2>
                 </div>
             </NavLink>
             
@@ -127,22 +67,21 @@ const menuItems = document.querySelectorAll(".menuItem");
     <div className="fund">
         <NavLink to="/fundwallet">
             <div className="fund--wallet">
-                <img src={AddIcon} alt=""/>
+                {/* <img src={logo} alt=""/> */}
                 <p>Fund Your Wallet</p>
             </div>
         </NavLink>
         <NavLink to="/transactions">
             <div className="transaction">
-                <img src={transactionIcon} alt=""/>
+                {/* <img src={transactionIcon} alt=""/> */}
                 <p>View transactions</p>
             </div>
         </NavLink>
         
     </div>
-
     <footer>
         <div className="logo">
-            <img src={PeerIcon} alt=""/>
+            <img src={logo} alt=""/>
         </div>
         
 
@@ -158,12 +97,10 @@ const menuItems = document.querySelectorAll(".menuItem");
             <NavLink to="#">Legal</NavLink>
         </div>
     </footer>
-    <script src="./javascript/hamburger.js"></script>
-        </Welcome.Wrapper>
-    )
+        </Test.Wrapper>
+    );
 }
-
-Welcome.Wrapper = styled.div`
+Test.Wrapper = styled.div`
 *{
     margin: 0;
     padding: 0;
@@ -171,46 +108,18 @@ Welcome.Wrapper = styled.div`
     scroll-behavior: smooth;
 
 }
-a{
-    text-decoration: none;
-}
-.hamburger {
-    position: absolute;
-    z-index: 100;
-    top: 2.4rem;
-    right: 1rem;
-    padding: 4px;
-    /* border: black solid 1px; */
-    /* background: white; */
-    cursor: pointer;
-    transition: all 1s;
-  &:hover{
-    transform: rotate(720deg);
-}}
 
-.nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 20px;
-    position: relative;
-    padding-top: 5%;
-    img{
-      width: 25%;
-    }
-}
-.icon{
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.hero__sec{
+.hero--sec{
     background: linear-gradient(356.95deg, #4D2B90 2.36%, #7E57C2 83.13%);
     border-radius: 0px 0px 20px 20px;
     //  height: 70vh; 
     background-repeat: no-repeat;
     // padding-bottom: 10px;
-    
+    .icon{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     .cent{
         font-family: 'Roboto' ,sans-serif;
         font-size: 25px;
@@ -302,6 +211,7 @@ a{
     padding-bottom: 30px; 
 
 }
+
 .menu {
     position: fixed;
     transform: translateY(-100%);
@@ -319,9 +229,6 @@ a{
     .showMenu {
         transform: translateY(0);
       }
-
-
-  }
 .menuItem {
     display: block;
     margin: 2rem 4rem;
@@ -335,10 +242,33 @@ a{
     /* text-decoration: underline; */
     color: #7E57C2;
   }
+
+  }
+  .hamburger {
+    position: absolute;
+    z-index: 100;
+    top: 2.4rem;
+    right: 1rem;
+    padding: 4px;
+    /* border: black solid 1px; */
+    /* background: white; */
+    cursor: pointer;
+    transition: all 1s;
+  }
+  
+.hamburger:hover{
+    transform: rotate(720deg);
+}
+
+
 .closeIcon {
     display: none;
   }
 
+
+  a{
+    text-decoration: none;
+}
 
   .stakes{
     margin-top: 20px;
@@ -392,7 +322,7 @@ a{
                 font-size: 12px;
                 line-height: 14px;
                 display: flex;
-                align-items: flex-end;
+                // align-items: flex-end;
                 text-align: center;
                 text-transform: capitalize;
                 
@@ -462,8 +392,7 @@ a{
                 font-size: 12px;
                 line-height: 14px;
                 display: flex;
-                align-items: flex-end;
-                justify-self:center;
+                align-items: center;
                 text-align: center;
                 text-transform: capitalize;
                 
@@ -594,7 +523,16 @@ footer{
     color: #E6E6E6;
     }
 }
-
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    position: relative;
+    padding-top: 5%;
+ img{
+    width: 25%;
+}}
 `
 
-export default Welcome;
+export default Test;

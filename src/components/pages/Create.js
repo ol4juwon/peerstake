@@ -1,160 +1,294 @@
 import styled from 'styled-components';
 import { NavLink, Redirect } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import User from '../hooks/User';
 
 import Hamburger from "../assets/menu_black_24dp 1.png";
 import Icon from "../assets/Peer Stake Icon.png";
+import swal from '@sweetalert/with-react';
 import PeerIcon from "../assets/peer stake logo 1 1.png"
-import UserIcon from "../assets/[Downloader 1.png";
+// import UserIcon from "../assets/[Downloader 1.png";
 import Wallet from "../images/paid_black_24dp 1.png"
+import axios from 'axios';
+var FormData = require('form-data');
+const BASEURL = process.env.REACT_APP_BASEURL
 const Create = () => {
-    const successful_popup = document.querySelector('.success');
-        const failed_popup = document.querySelector('.failed');
+const {findUser, getUserID} = User();
+  const menu = document.querySelector(".menu");
+  // const menuItems = document.querySelectorAll(".menuItem");
+  function toggleMenu() {
+    if (menu.classList.contains("showMenu")) {
+        menu.classList.remove("showMenu");
+        menu.style.top = "-100px";
+    
+        // closeIcon.style.display = "none";
+        // menuIcon.style.display = "block";
+    } else {
+        menu.classList.add("showMenu");
+        menu.style.top = "0";
+        // closeIcon.style.display = "block";
+        // menuIcon.style.display = "none";
+    
+    }
+    }
+  const { getUserByUsername, logout } = User();
+  const [supervisors,setSupervisors] = useState("")
+   const [parties, setParties] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [user,setUser] = useState('')
+  const [name, setName] = useState("")
+  const [currency,setCurrency] = useState("NGN")
+  const [amount, setAmount] = useState('');
+   const [creator, setCreator] = useState("");
+   const [decider, setDecider] = useState("");
+  //  const [formData, setFormData] = useState("")
+   const [description, setDescription] = useState("");
+   const setForms = (e) => {
+     e.preventDefault()
+     console.log("parties",parties);
+     console.log("date",date);
+     console.log("amount",amount);
+      console.log("name",name);
+     console.log("description",description);
+     const usse = localStorage.getItem("user");
+      const userSA = JSON.parse(usse);
+      setCreator(`${userSA._id}`);
+     console.log("creator",creator);
+     console.log("supervisor", supervisors);
+      console.log("decider",decider);
+    // console.log("onsubmit",formData)
+    createStake({parties,name, date, amount,description,currency ,decider, supervisors, creator:userSA._id});
+}
+   
+  
 
-        function turn_on(popup) {
-            popup.style.display = "flex";
-        }
 
-        function turn_off(popup) {
-            popup.style.display = "none";
+const checkUser = async (user) => {
+  const vb = (user === "not found")
+  return vb
+}
+const createStake = async(payload) => {
+    const { name, date, amount, creator,currency, decider, description,parties, supervisors } = payload;
+    if(amount == null || amount === "" || amount <= 0){
+      swal(
+        {
+          title: "Required",
+          text: "Please enter an amount",
+          icon: "warning",
+          buttons: "ok",
         }
+      )
+      return;
+    }
+    console.log("payload",payload)
+    const ids = findUser(parties)
+const userIds = await getUserID(ids)
+console.log("userIds",userIds)
+if(!userIds.every(checkUser)){
+  alert("please enter valid parties")
+}
+const sid = findUser(supervisors)
+const supervisorIds = await getUserID(sid)
+if(!supervisorIds.every(checkUser)){
+  alert("please enter valid supervisors")
+}
+// setCreator(localStorage.getItem("user").)
+    var data = new FormData();
+  setCreator(JSON.parse(localStorage.getItem("user"))._id);
+    data.append('creatorId', creator);
+    data.append('name',name);
+    data.append('description', description);
+    data.append('amount', amount);
+    data.append('currency', currency);
+    data.append('dueDate', date);
+   
+    userIds.map(id => {
+     return data.append('parties', id);
+    })
+    supervisorIds.map(id => {
+      return data.append('supervisors', id)
+    })
+    data.append('decider',decider);
+
+    
+    console.log("data",data.toString())
+    const axiosInstance =  await axios.post(
+        `${BASEURL}/stake/create`,
+        data,
+        {
+          headers:{
+           
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json ",
+          }
+        }
+    ).then(res => {
+        console.log(res.data)
+        return res.data
+    }).catch(err =>{
+      if(err.response){
+          console.log("Error:", err.response)
+          return err.response
+      }else if(err.request){
+          console.log("Error:", err.request)
+          return err.request
+      }else{
+          console.log("Error:", err.message)
+          return err.message
+      }
+  });
+  if(axiosInstance.code === 200){
+    swal(
+        {      
+          title:"Congratulations",
+          text:"Your stake was created successfully!",
+          icon:"success",
+          button: "OK",       
+        }
+    ).then(value => {
+      swal({
+        title: "Do You want to create another Stake",
+        text: "",
+        icon: "warning",
+        buttons: ["Take Me Back", "Yes"]
+
+      }).then(value => {
+        console.log("value",value)
+        // return;
+        if(value === true){
+          window.location.reload()
+        }else{
+          window.location.replace("/welcome")
+        }
+      }    
+    
+    )
+  })
+}else{
+    
+    swal(
+{      
+        title:"Couldn't Create Stake",
+        text:`${axiosInstance?.data.error}`,
+        icon:"error",
+        button: "OK",
+}
+    )
+    return;
+  }
+console.log("axiosInstance",axiosInstance)
+ }
+   
+ 
+  useEffect(()=>{
+    const newUser = localStorage.getItem('user')
+  
+    const k = JSON.parse(newUser)
+    setUser(k)
+  },[])
     return (
         <Create.Wrapper>
         {localStorage.getItem("user") ?"" : <Redirect to="/login"/>}
-            
-      <ul className="menu">
-        <li><NavLink className="menuItem" to="welcome.html">Home</NavLink> </li>
-        <li><NavLink className="menuItem" to="user.html">Profile</NavLink> </li>
-        <li><NavLink className="menuItem" to="create.html">Stake</NavLink> </li>
-        <li><NavLink className="menuItem" to="fund_wallet.html">Wallet</NavLink> </li>
-        <li><NavLink className="menuItem" to="email_login.html">Sign Out</NavLink> </li>
-      </ul>
-      <img src={Hamburger} className="hamburger" alt=""/>
-
-    <div className="hero__sec">
-        <div>
-            <div className="icon">
+        <ul className="menu">       
+        <li><NavLink className="menuItem" to="/">Home</NavLink></li> 
+        <li><NavLink className="menuItem" to="/user">Profile</NavLink></li>
+        <li><NavLink className="menuItem" to="/create">Stake</NavLink></li>
+        <li><NavLink className="menuItem" to="/fund_wallet">Wallet</NavLink></li>
+        <li><i className="menuItem" onClick={logout}> Sign out</i></li>
+        </ul> 
+      <img src={Hamburger} className="hamburger" alt="" onClick={toggleMenu}/>
+          
+      <div className="hero__sec"> 
+         <div> 
+             <div className="icon">
                 <img src={Icon} alt=""/>
             </div>
             <div  className="nav">
-                <NavLink to="welcome.html" id="size">
+                <NavLink to="/Welcome" id="size">
                     <img src={PeerIcon} alt=""/>
-
+<i className="fa fa-user-circle-o" aria-hidden="true"></i>
                 </NavLink> 
 
-                 <NavLink to="#"> <img src={Icon} alt=""/> </NavLink> 
+                 <NavLink to="/"> <img src={Icon} alt=""/> </NavLink> 
             </div>
            
         </div>
         <div className="hero__content">
           <h2> 
             <span className="space">
-                <span className="cent">$</span> 
-                <span>3,200</span>
+                <span className="cent">₦</span> 
+                <span>{user.wallet?.balance}</span>
             </span>
-            <span className="cent">.59</span> 
+            <span className="cent"></span> 
         </h2>
             <h3>WALLET BALANCE</h3>
             <img src={Wallet} alt=""/>
         </div>
-
-        
-    </div>
-          <div className="content">
+        </div>
+        <div className="content">
       <form >
         <div className="add_user">
-          <NavLink to="">
+          {/* <NavLink to="/">
             <img src="/images/Group 110.png" alt=""/>
             <p>Add User</p>
-          </NavLink> 
+          </NavLink>  */}
+        </div>
+        <div className="inputs">
+          <label htmlFor="name">Stake Title</label>
+          <input type="text" name="name" required value={name} onChange={(e)=> {setName(e.target.value)}} id="amout" placeholder="Arsenal vs manutd match"/>
         </div>
         <div className="inputs">
           <label htmlFor="amount">I want to stake</label>
-          <input type="number" name="amount" id="amout" placeholder="$100"/>
+          <input type="number" name="amount" required value={amount} onChange={(e)=> {setAmount(e.target.value)}} id="amout" placeholder="₦100"/>
         </div>
         <div className="inputs">
           <label htmlFor="against">With</label><br/>
-          <input type="text" name="against" id="against" placeholder="I @jide will win @username/email"/>
+          <input type="text" name="against" value={parties} required onChange={(e)=> {setParties(e.target.value)}} id="against" placeholder="I @jide will win @username/email"/>
         </div>
         <div className="inputs">
           <label htmlFor="bet">That</label><br/>
-          <input type="text" name="bet" id="bet" placeholder="A 3 set FIFA 22 game"/>
+          <input type="text" name="bet"  value={description} required onChange={(e)=>setDescription(e.target.value)} id="bet" placeholder="A 3 set FIFA 22 game"/>
         </div>
         <div className="inputs">
           <label htmlFor="when">On</label><br/>
-          <input type="datetime-local" name="when" id="when" placeholder="Date/Time"/>
+          <input type="datetime-local" name="when" id="when" value={date} required onChange={(e) => { setDate(e.target.value)}} placeholder="Date/Time"/>
         </div>
         <div className="inputs">
           <label htmlFor="Decider">Decider for dispute resolution</label><br/>
-          <input type="" name="Decider" id="Decider" placeholder="picture of the score board"/>
+          <input type="" name="Decider" id="Decider" value={decider} required onChange={(e)=>setDecider(e.target.value)} placeholder="picture of the score boardl"/>
+        </div>
+        <div className="inputs">
+          <label htmlFor="Supervisors">Supervisor</label><br/>
+          <input type="" name="Supervisors" id="Supervisors" value={supervisors} required onChange={(e)=>setSupervisors(e.target.value)} placeholder="supervisor username e.g @admin"/>
         </div>
         
+           
             
-            <NavLink to="stakes.html" type="submit" className="submit" value="Share">
+            {/* <NavLink to="/stakes" type="submit" className="submit">
               Share
-            </NavLink> 
+            </NavLink>  */}
         
-        
+        <button className='submit' onClick={(e) => {setForms(e)}}> Create Stake</button> 
       </form>
     </div>
-
-    {/* <!-- <div className="st_wt">
-      <p>Stake with</p>
-    </div> --> */}
-    <div className="fund">
-        <NavLink className="wallet" onClick="turn_on(successful_popup)">
-            <p>Stake</p>
-        </NavLink> 
-        {/* <!-- <NavLink className="card-transaction" to="#">
-            <p>Card</p>
-        </NavLink> 
-        <NavLink className="bitcoin-transaction" to="#">
-            <p>Bitcoin</p>
-        </NavLink> --> */}
-    </div>
-
     <footer>
         <div className="logo">
             <img src="./assets/peer stake logo 1 1.png" alt=""/>
         </div>
-        
+         
 
-        <div className="links">
-            <NavLink to="#">About Us</NavLink> 
-            <NavLink to="#">Contact Us</NavLink> 
-            <NavLink to="#">Customer Support</NavLink> 
+         <div className="links">
+            <NavLink to="/">About Us</NavLink> 
+            <NavLink to="/">Contact Us</NavLink> 
+            <NavLink to="/">Customer Support</NavLink> 
 
         </div>
 
         <div className="linkss">
-            <NavLink to="#">Jobs</NavLink> 
-            <NavLink to="#">Legal</NavLink> 
+            <NavLink to="/">Jobs</NavLink> 
+            <NavLink to="/">Legal</NavLink> 
         </div>
     </footer>
-
-    {/* <!-- popups section --> */}
-
-    <div className="cover success" onclick="turn_off(successful_popup);">
-      <div className="card">
-        <img className="close" src="./images/Vector 3.png" alt="close" onclick="turn_off(successful_popup);"/>
-        <h3>Congratulations!</h3>
-        <p>Your stake was created successfully</p>
-        <img className="success_img" src="./images/Tick success.png" alt=""/>
-        <div onclick="window.location.to='./stakes.html'"> Continue </div>
-      </div>
-  </div>
-
-  <div className="cover failed" onclick="turn_off(failed_popup);">
-      <div className="card">
-        <img className="close" src="/images/Vector 3.png" alt="" onclick="turn_off(failed_popup);"/>
-        <h3>Sorry!</h3>
-        <p>Stake could not be created due to insufficient funds</p>
-        <img className="failed_img" src="/images/icons8-cancel.svg" alt=""/>
-        <div onclick="window.location.to='./fund_wallet.html'"> Deposit </div>
-      </div>
-  </div>
-
-    {/* <!-- popups section ends --> */}
-
     <script src="./javascript/hamburger.js"></script>
 
         </Create.Wrapper>
@@ -430,7 +564,7 @@ Create.Wrapper = styled.div`
   
   .inputs input{
     width: 100%;
-    height: 50px;
+    height: 15px;
     border: 1px solid #e6e6e6;
     background-color: white;
     border-radius: 5px;
@@ -442,7 +576,7 @@ Create.Wrapper = styled.div`
     color: #fff;
     font-weight: 400;
     font-size: 15px;
-    min-height: 50px;
+    min-height: 35px;
     border: none;
     border-radius: 5px;
     margin-bottom: 3%;

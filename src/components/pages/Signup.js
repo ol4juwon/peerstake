@@ -3,6 +3,8 @@ import {useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import moment from "moment";
+import { $CombinedState } from "redux";
+import swal from "sweetalert";
 const Test =require( "../images/_1930224111808.png");
 
 const BASEURL = process.env.REACT_APP_BASEURL
@@ -15,43 +17,112 @@ const Signup = () =>   {
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     // const [address, setAddress] = useState('');
-    const [gender,setGender ] = useState('');
+    // const [gender,setGender ] = useState('');
+    var today = new Date();
+    var year= today.getFullYear()-18;
+    const month = today.getMonth();
+    const day = today.getDate();
+    
+    const minDate = year+"-"+month+"-"+day;
+   const invalidUserName = (e) => {
+    e.preventDefault();
+    if(e.target.value.length <5){
+        e.setCustomValidity("Username must be at least 5 characters long");
+    }
+   }
     const [dob,setDob] =useState('');
     const onsubmit = (e) => {
         e.preventDefault();
+        if(username.length <5){
+            swal({
+                text:  "Username must be at least 5 characters long",
+                icon: "warning",
+            }
+              
+            )
+            return;
+        }
+        if(password.length < 7){
+            swal({
+                text:"Password must be at least 8 characters long",
+                icon: "warning",
+             } )
+            return;
+        }
         console.log("dob",dob)
-        const DOB = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
-        register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password, confirm_password: password, email, username,gender});
+        const date = new Date(dob);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        const DOB =month + "/" + day+ "/" + year ;
+        console.log("DOB",DOB)
+        // const  = moment(dob.valueAsNumber).format("DD/MM/YYYY"); 
+        register({first_name:firstName,last_name:lastName,dob:DOB,phone_number:phone,password:password, confirm_password: password, email, username});
     }
 
     const register = async (payload) =>{
         console.log(payload,BASEURL);
         const data = JSON.stringify(payload);
-        const config = {
-            method: "POST",
-        url: `${BASEURL}/auth/register`,
-        headers: { 
+        // const config = {
+        //     method: "POST",
+        // url: `${BASEURL}/auth/register`,
+        // headers: { 
+        //         'Content-Type': 'application/json'
+        //     },
+        // data : data   
+        // }
+        // console.log("config",config);
+        console.log("localhodt", BASEURL);
+        const response  = await axios.post(`${BASEURL}/auth/register`,
+        data,
+        {
+            headers: {
                 'Content-Type': 'application/json'
-            },
-        data : data   
+            }
         }
-        try{
-        console.log("config",config);
-        const response  = await axios(config).then(res => res.data).catch(function (error) {
-            // console.log(error);
-          });
-          console.log("response",response,response.error);
+// <<<<<<< HEAD
+//         try{
+//         console.log("config",config);
+//         const response  = await axios(config).then(res => res.data).catch(function (error) {
+//             // console.log(error);
+//           });
+//           console.log("response",response,response.error);
+// =======
+        )
+        .then(res => res.data)
+        .catch(err => {
+            if(err.response){
+                console.log("Error:", err.response)
+                return err.response.data || err.response;
+            }else if(err.request){
+                console.log("Error:", err.request)
+                return err.request
+            }else{
+                console.log("Error:", err.message)
+                return err.message
+            }
+        });
+    console.log("response",response);
+// >>>>>>> 26190452d387e3a744ab40e00d8f3a4c072a9e89
         if(response.user){
             alert("User registered successfully");
             window.location.href = '/login';
         }
-        console.log({response});
-        if(response.message){
-            alert("User registration failed. \n Reason:"+response.message);
+        // console.log(response);
+        const datum =response;
+        // console.log(datum.data?.status);
+        if(datum.status >= 400 || datum.data.statusCode >= 400){
+            const error = datum.error //|| datum.data.message || datum.data.error.message;
+            console.log("error",error);
+            swal({
+                title: "User registration failed",
+                text: error.response.error,
+            })
+            return;
         }
-        }catch(error){  
-            console.log(error);
-          }
+        // }catch(error){  
+        //     console.log(error);
+        //   }
         
 
     }
@@ -93,18 +164,18 @@ const Signup = () =>   {
             
             <div className="inputs">
                 <label htmlFor="dob">Date of Birth</label><br/>
-                <input type="date"  value={dob} min={moment(date).subtract(18,'y')} required onChange={(e) => {setDob(e.target.value)}} id="dob" name="dob"/>
+                <input type="date"  value={dob} max={minDate} required onChange={(e) => {setDob(e.target.value)}} id="dob" name="dob"/>
             </div>
             <div className="inputs">
                 <label htmlFor="username">Username</label><br/>
-                <input type="text" minLength="4" required value={username} onChange={(e) => { setUsername(e.target.value)}} placeholder="Username"/>
+                <input type="text"    value={username} onChange={(e) => { setUsername(e.target.value)}} placeholder="Username"/>
             </div>
             <div className="inputs">
                 <label htmlFor="password">Password</label><br/>
-                <input type="password" required value={password} onChange={(e) => { setPassword(e.target.value)}} id="password" name="password" placeholder="Password"/>
+                <input type="password"  value={password} onChange={(e) => { setPassword(e.target.value)}} id="password" name="password" placeholder="Password"/>
             </div>
             
-            {/* <!-- <div class="inputs"/>
+            {/* <!-- <div className="inputs"/>
                 <label for="gender">Gender <span>(optional)</span></label><br>
                 <select name="gender" id="gender" aria-placeholder="select a gender">
                     <option value="male">Male</option>
@@ -113,7 +184,7 @@ const Signup = () =>   {
             </div> --> */}
             <div className="terms_conditions">
                 <input type="checkbox" id="terms" required name="terms" value="terms" />
-                <label htmlFor="terms" className="terms">I accept the terms and condition of Peer Stake</label>
+                <label htmlFor="terms" className="terms">Kindly accept the terms and conditions to proceed.</label>
             </div>
             <input className="submit" type="submit" value="Sign Up"/><br/>
     

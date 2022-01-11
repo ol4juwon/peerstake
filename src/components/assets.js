@@ -1,0 +1,1 @@
+export { ReactComponentElement as PeerLogo } from "./images/apple.png";
