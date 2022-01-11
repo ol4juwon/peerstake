@@ -5,10 +5,12 @@ import axios from "axios";
 import moment from "moment";
 import { $CombinedState } from "redux";
 import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
 const Test =require( "../images/_1930224111808.png");
 
 const BASEURL = process.env.REACT_APP_BASEURL
 const Signup = () =>   {
+    const history = useHistory();
     const date = new Date();
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -107,7 +109,7 @@ const Signup = () =>   {
         if(response.user){
             swal({title:"User registered successfully"
             ,icon: "success"});
-            window.location.href = '/login';
+            history.push("/login");
         }
         // console.log(response);
         const datum =response;
