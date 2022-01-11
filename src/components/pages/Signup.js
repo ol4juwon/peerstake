@@ -110,6 +110,7 @@ const Signup = () =>   {
             swal({title:"User registered successfully"
             ,icon: "success"});
             history.push("/login");
+            return;
         }
         // console.log(response);
         const datum =response;
