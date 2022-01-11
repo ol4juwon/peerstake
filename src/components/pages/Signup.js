@@ -105,7 +105,8 @@ const Signup = () =>   {
     console.log("response",response);
 // >>>>>>> 26190452d387e3a744ab40e00d8f3a4c072a9e89
         if(response.user){
-            alert("User registered successfully");
+            swal({title:"User registered successfully"
+            ,icon: "success"});
             window.location.href = '/login';
         }
         // console.log(response);
